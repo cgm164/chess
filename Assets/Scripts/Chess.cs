@@ -8,7 +8,6 @@ using SimpleJSON;
 public class Chess : MonoBehaviour
 {
     private string status = "";
-    public List<GameObject> pieces;
 
     public Chess() { }
     
@@ -32,7 +31,10 @@ public class Chess : MonoBehaviour
         StartCoroutine(Request($"http://chess-api.herokuapp.com/valid_move/{nextStatus}", result =>
         {
             if (result["validMove"])
+            {
                 status = nextStatus;
+            }
+                
             Debug.Log(status);
         }));
     }
@@ -45,12 +47,4 @@ public class Chess : MonoBehaviour
             Debug.Log(status);
         }));
     }
-
-    public void Start()
-    {
-        status = "a2a4";
-        Move("a2a10");
-        Move();
-    }
-
 }
