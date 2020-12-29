@@ -12,8 +12,13 @@ public class BoardManager : MonoBehaviour
     public GameObject queen;
     public GameObject king;
 
+    public GameObject camera;
+
     public Color black;
     public Color white;
+
+    private Color turn;
+    public TypeGame typeGame = TypeGame.IA;
 
     Ray ray;
     RaycastHit hit;
@@ -22,12 +27,18 @@ public class BoardManager : MonoBehaviour
     private GameObject oldCell;
     private GameObject cellSelect;
     private Chess chess;
-
+    private Rotation moveManager;
     private enum Status
     {
         SELECT_PIECE, 
         SELECT_CELL, 
         MOVE_PIECE
+    };
+
+    public enum TypeGame
+    {
+        IA, 
+        HUMAN
     };
 
     private Status status = Status.SELECT_PIECE;
@@ -42,10 +53,10 @@ public class BoardManager : MonoBehaviour
 
         iPiece.transform.position += new Vector3(x, y + height, z);
         iPiece.transform.rotation  = Quaternion.Euler(cell.transform.rotation.eulerAngles.x, rotation, cell.transform.rotation.eulerAngles.z);
-        iPiece.GetComponent<StatePiece>().color = color;
+        iPiece.GetComponent<State>().color = color;
         addColor(iPiece, color);
 
-        obj.GetComponent<StatePiece>().cell = iPiece;
+        obj.GetComponent<State>().piece = iPiece;
         
         cells.Add(iPiece);
     }
@@ -53,7 +64,7 @@ public class BoardManager : MonoBehaviour
     private void addColor(GameObject obj, Color color)
     {
         obj.GetComponent<MeshRenderer>().material.color = color;
-        obj.GetComponent<StatePiece>().color = color;
+        obj.GetComponent<State>().color = color;
     }
 
     private void GenerateBoard()
@@ -76,12 +87,12 @@ public class BoardManager : MonoBehaviour
 
                 if (j == 1 || j == 6)
                 {
-                    GeneratePiece(obj, pawn, height, 0, j == 1? black : white);
+                    GeneratePiece(obj, pawn, height, 0, j == 1? white : black);
 
                 } else if (j == 0 || j == 7)
                 {
                     float rotation = j == 0 ? 0 : -180;
-                    Color color = j == 0 ? black : white;
+                    Color color = j == 0 ? white : black;
 
                     if (i == 0 || i == 7)
                         GeneratePiece(obj, rook, height, rotation, color);
@@ -101,70 +112,157 @@ public class BoardManager : MonoBehaviour
     void Start()
     {
         GenerateBoard();
-        gameObject.AddComponent<Chess>();
-        chess = gameObject.GetComponent<Chess>();
+        moveManager = gameObject.AddComponent<Rotation>();
+        chess = gameObject.AddComponent<Chess>();
+        turn = white;
     }
 
     public delegate void EndToMove();
 
     void MovePiece()
     {
-        //pieceSelect.transform.position += new Vector3(0, 5, 0);
-        pieceSelect.GetComponent<StatePiece>().Move(cellSelect, () => {
+        void generic()
+        {
             status = Status.SELECT_PIECE;
-            pieceSelect.GetComponent<MeshRenderer>().material.color = pieceSelect.GetComponent<StatePiece>().color;
-            cellSelect.GetComponent<MeshRenderer>().material.color = cellSelect.GetComponent<StatePiece>().color;
-            cellSelect.GetComponent<StatePiece>().cell = pieceSelect;
-            oldCell.GetComponent<StatePiece>().cell = null;
+            pieceSelect.GetComponent<MeshRenderer>().material.color = pieceSelect.GetComponent<State>().color;
+            cellSelect.GetComponent<MeshRenderer>().material.color = cellSelect.GetComponent<State>().color;
             pieceSelect = null;
             cellSelect = null;
-        });
+        }
+
+        void movePiece()
+        {
+            pieceSelect.GetComponent<State>().Move(cellSelect, () =>
+            {
+                turn = turn == white ? black : white;
+
+                if (typeGame == TypeGame.HUMAN)
+                    StartCoroutine(moveManager.Rotate(camera.transform, new Vector3(0, 0, 180), 1.0f));
+
+                if (cellSelect.GetComponent<State>().piece != null)
+                    Destroy(cellSelect.GetComponent<State>().piece);
+
+                cellSelect.GetComponent<State>().piece = pieceSelect;
+                oldCell.GetComponent<State>().piece = null;
+
+                generic();
+            });
+        }
+
+        if (typeGame == TypeGame.HUMAN || turn == white)
+        {
+            string oldC = oldCell.name;
+            string newC = cellSelect.name;
+            
+            chess.Move(oldC + newC, () => {
+                movePiece();
+            }, generic);
+        } else
+        {
+            chess.Move((o, n) =>
+            {
+                status = Status.SELECT_PIECE;
+                cellSelect = GameObject.Find(n);
+                oldCell = GameObject.Find(o);
+                pieceSelect = oldCell.GetComponent<State>().piece;
+                movePiece();
+            });            
+        }  
+    }
+
+    private bool IsHumanVSIA()
+    {
+        return typeGame == TypeGame.IA;
+    }
+
+    private bool IsTurnIA()
+    {
+        return status == Status.SELECT_PIECE && turn == black; 
+    }
+
+    private GameObject GetClickedCell()
+    {
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        
+        if (Physics.Raycast(ray, out hit) && Input.GetMouseButtonDown(0))
+            return hit.collider.gameObject;
+
+        return null;
+    }
+
+    private GameObject GetPiece(GameObject obj)
+    {
+        return obj.GetComponent<State>().piece;
+    }
+
+    private Color GetOriginalColor(GameObject obj)
+    {
+        return obj.GetComponent<State>().color;
+    }
+
+    private void SetColor(GameObject obj, Color color)
+    {
+        obj.GetComponent<MeshRenderer>().material.color = color;
+    }
+
+    private bool IsSamePieceThatSelected(GameObject piece)
+    {
+        return pieceSelect == piece && pieceSelect != null;
+    }
+
+    private void ResetSelection()
+    {
+        pieceSelect = null;
+        cellSelect = null;
+        oldCell = null;
     }
 
     // Update is called once per frame
     void Update()
     {
-        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        
-        if (Physics.Raycast(ray, out hit))
+        if (IsHumanVSIA() && IsTurnIA())
         {
-            if (Input.GetMouseButtonDown(0))
+            MovePiece();
+            return;
+        }
+
+        GameObject cell = GetClickedCell();
+
+        if (cell)
+        {
+            GameObject piece = GetPiece(cell);
+
+            if (IsSamePieceThatSelected(piece))
             {
-                GameObject temp = hit.collider.gameObject.GetComponent<StatePiece>().cell;
+                status = Status.SELECT_PIECE;
+                SetColor(pieceSelect, GetOriginalColor(pieceSelect));
 
-                if (status == Status.SELECT_PIECE || pieceSelect == temp && pieceSelect != null)
-                {
-                    if (pieceSelect == temp && pieceSelect != null)
-                    {
-                        status = Status.SELECT_PIECE;
-                        pieceSelect.GetComponent<MeshRenderer>().material.color = pieceSelect.GetComponent<StatePiece>().color;
-                        
-                        if (cellSelect != null)
-                            cellSelect.GetComponent<MeshRenderer>().material.color = cellSelect.GetComponent<StatePiece>().color;
+                if (cellSelect)
+                    SetColor(cellSelect, GetOriginalColor(cellSelect));
 
-                        pieceSelect = null;
-                        cellSelect  = null;
-                        oldCell     = null;
-                        return;
-                    }
-
-                    pieceSelect = hit.collider.gameObject.GetComponent<StatePiece>().cell;
-                    oldCell = hit.collider.gameObject;
-
-                    if (pieceSelect != null)
-                    {
-                        status = Status.SELECT_CELL;
-                        pieceSelect.GetComponent<MeshRenderer>().material.color = Color.red;
-                    }
-                }
-                else if (status == Status.SELECT_CELL)
-                {
-                    status = Status.MOVE_PIECE;
-                    cellSelect  = hit.collider.gameObject;
-                    cellSelect.GetComponent<MeshRenderer>().material.color = Color.red;
-                    MovePiece();
-                } 
+                ResetSelection();
+                return;
             }
+
+            if (status == Status.SELECT_PIECE && piece)
+            {
+                pieceSelect = piece;
+                oldCell     = cell;
+
+                if (GetOriginalColor(piece) == turn)
+                {
+                    status = Status.SELECT_CELL;
+                    SetColor(pieceSelect, Color.red);
+                }
+            }
+            else if (status == Status.SELECT_CELL)
+            {
+                status = Status.MOVE_PIECE;
+                cellSelect = hit.collider.gameObject;
+                SetColor(cellSelect, Color.red);
+                MovePiece();
+            }
+
         }
     }
 }

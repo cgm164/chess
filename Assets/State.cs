@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StatePiece : MonoBehaviour
+public class State : MonoBehaviour
 {
-    public GameObject cell;
+    public GameObject piece;
     public Color color;
 
-    // Adjust the speed for the application.
-    public float speed = 1.0f;
-
-    // The target (cylinder) position.
+    public float speed = 0.1f;
     public Transform target;
 
     private bool isMoving = false;

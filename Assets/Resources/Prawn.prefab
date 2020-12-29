@@ -41,7 +41,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3414703639096726007
+--- !u!114 &7970082670195150043
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -50,11 +50,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1276773359353604386}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 928b5d3c50dd04246ac99ed1f7c97564, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e0fa15836183e343836305a466a3b5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cell: {fileID: 0}
+  piece: {fileID: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
+  speed: 10
+  target: {fileID: 0}
 --- !u!1001 &2123846668795843699
 PrefabInstance:
   m_ObjectHideFlags: 0

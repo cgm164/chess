@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 4805366066116911417}
   - component: {fileID: 8898666431751299699}
   - component: {fileID: 7793272579802969425}
-  - component: {fileID: 7921115896214118888}
   m_Layer: 0
   m_Name: Cell
   m_TagString: Untagged
@@ -106,20 +105,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3137257413684682723}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 928b5d3c50dd04246ac99ed1f7c97564, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e0fa15836183e343836305a466a3b5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cell: {fileID: 0}
---- !u!114 &7921115896214118888
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3137257413684682723}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 928b5d3c50dd04246ac99ed1f7c97564, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cell: {fileID: 0}
+  piece: {fileID: 0}
+  color: {r: 0, g: 0, b: 0, a: 0}
+  speed: 50
+  target: {fileID: 0}
