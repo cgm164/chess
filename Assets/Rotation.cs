@@ -39,10 +39,11 @@ public class Rotation : MonoBehaviour
         }
     }
 
-    public IEnumerator Rotate(Transform thisTransform, Vector3 degrees, float time)
+    public IEnumerator Rotate(Transform thisTransform, Quaternion endRotation, float time)
     {
         Quaternion startRotation = thisTransform.rotation;
-        Quaternion endRotation = thisTransform.rotation * Quaternion.Euler(degrees);
+        //Quaternion endRotation = thisTransform.rotation * Quaternion.Euler(degrees);
+        //Debug.Log(endRotation); 
         float rate = 1.0f / time;
         float t = 0.0f;
         while (t < 1.0f)

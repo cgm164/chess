@@ -24,7 +24,7 @@ public class Chess : MonoBehaviour
         
     }
 
-    public void Move(string movement, BoardManager.EndToMove callback, BoardManager.EndToMove error)
+    public void Move(string movement, BoardManager.EndToMove callback, BoardManager.EndToMoveStatus error)
     {
         string nextStatus = status + movement;
 
@@ -39,7 +39,7 @@ public class Chess : MonoBehaviour
             }
             else
             {
-                error();
+                error(true);
             }
         }));
     }

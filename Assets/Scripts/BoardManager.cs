@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BoardManager : MonoBehaviour
 {
@@ -28,6 +29,10 @@ public class BoardManager : MonoBehaviour
     private GameObject cellSelect;
     private Chess chess;
     private Rotation moveManager;
+    private Status status = Status.SELECT_PIECE;
+    private List<string> castlingsMoves = new List<string> { "e1g1", "e1c1", "e8g8", "e8c8"};
+    private List<string> castlingsRookL = new List<string> { "h1", "a1", "h8", "a8"};
+    private List<string> castlingsRookR = new List<string> { "f1", "d1", "f8", "d8" };
     private enum Status
     {
         SELECT_PIECE, 
@@ -41,8 +46,6 @@ public class BoardManager : MonoBehaviour
         HUMAN
     };
 
-    private Status status = Status.SELECT_PIECE;
-    private List<GameObject> cells = new List<GameObject>();
 
     private void GeneratePiece(GameObject obj, GameObject piece, float height, float rotation, Color color)
     {
@@ -52,13 +55,11 @@ public class BoardManager : MonoBehaviour
         float z = obj.transform.position.z;
 
         iPiece.transform.position += new Vector3(x, y + height, z);
-        iPiece.transform.rotation  = Quaternion.Euler(cell.transform.rotation.eulerAngles.x, rotation, cell.transform.rotation.eulerAngles.z);
+        iPiece.transform.rotation  = Quaternion.Euler(piece.transform.rotation.eulerAngles.x, piece.transform.eulerAngles.y + rotation, piece.transform.rotation.eulerAngles.z);
         iPiece.GetComponent<State>().color = color;
         addColor(iPiece, color);
 
         obj.GetComponent<State>().piece = iPiece;
-        
-        cells.Add(iPiece);
     }
 
     private void addColor(GameObject obj, Color color)
@@ -74,14 +75,16 @@ public class BoardManager : MonoBehaviour
 
         for (int i = 0; i < 8; i++)
             for (int j = 0; j < 8; j++) {
-                GameObject obj = Instantiate(cell);
-                obj.transform.position += new Vector3(size * i, 0,  size * j);
+                GameObject obj;
+
+                obj = Instantiate(cell);
+                obj.transform.position += new Vector3(size * i, 0, size * j);
 
                 if (i % 2 == 0 && j % 2 == 0 || i % 2 != 0 && j % 2 != 0)
                     addColor(obj, black);
                 else
                     addColor(obj, white);
-               
+
 
                 obj.name = char.ConvertFromUtf32(i + 97) + "" + (j + 1);
 
@@ -96,16 +99,17 @@ public class BoardManager : MonoBehaviour
 
                     if (i == 0 || i == 7)
                         GeneratePiece(obj, rook, height, rotation, color);
-                    if (i == 1 || i == 6)
+                    else if (i == 1 || i == 6)
                         GeneratePiece(obj, horse, height, rotation, color);
-                    if (i == 2 || i == 5)
+                    else if (i == 2 || i == 5)
                         GeneratePiece(obj, sharp, height, rotation, color);
-                    if (i == 3)
+                    else if (i == 3)
                         GeneratePiece(obj, queen, height, rotation, color);
                     else 
                         GeneratePiece(obj, king, height, rotation, color);
                 }
             }
+        cell.SetActive(false);
     }
 
     // Start is called before the first frame update
@@ -118,34 +122,49 @@ public class BoardManager : MonoBehaviour
     }
 
     public delegate void EndToMove();
+    public delegate void EndToMoveStatus(bool a);
 
     void MovePiece()
     {
-        void generic()
+        void generic(bool change)
         {
-            status = Status.SELECT_PIECE;
             pieceSelect.GetComponent<MeshRenderer>().material.color = pieceSelect.GetComponent<State>().color;
             cellSelect.GetComponent<MeshRenderer>().material.color = cellSelect.GetComponent<State>().color;
             pieceSelect = null;
             cellSelect = null;
+            if (change)
+                status = Status.SELECT_PIECE;
         }
 
-        void movePiece()
+        void movePiece(string o, string n)
         {
             pieceSelect.GetComponent<State>().Move(cellSelect, () =>
             {
-                turn = turn == white ? black : white;
-
                 if (typeGame == TypeGame.HUMAN)
-                    StartCoroutine(moveManager.Rotate(camera.transform, new Vector3(0, 0, 180), 1.0f));
+                {
+                    Vector3 v = camera.transform.rotation.eulerAngles;
+
+                    StartCoroutine(moveManager.Rotate(camera.transform, Quaternion.Euler(v.x, v.y + 180, v.z), 1f));
+                    StartCoroutine(moveManager.Translation(camera.transform, new Vector3(0, 0, turn == white ? 37 : -37), 1f, Rotation.MoveType.Time));
+                }
 
                 if (cellSelect.GetComponent<State>().piece != null)
                     Destroy(cellSelect.GetComponent<State>().piece);
 
                 cellSelect.GetComponent<State>().piece = pieceSelect;
                 oldCell.GetComponent<State>().piece = null;
+                
+                int index = castlingsMoves.IndexOf(o + n);
+                generic(index == -1);
 
-                generic();
+                if (index != -1)
+                {
+                    cellSelect = GameObject.Find(castlingsRookR[index]);
+                    oldCell = GameObject.Find(castlingsRookL[index]);
+                    pieceSelect = oldCell.GetComponent<State>().piece;
+                    movePiece(castlingsRookL[index], castlingsRookR[index]);
+                } else
+                    turn = turn == white ? black : white;
             });
         }
 
@@ -153,19 +172,18 @@ public class BoardManager : MonoBehaviour
         {
             string oldC = oldCell.name;
             string newC = cellSelect.name;
-            
+
             chess.Move(oldC + newC, () => {
-                movePiece();
+                movePiece(oldC, newC);
             }, generic);
         } else
         {
             chess.Move((o, n) =>
             {
-                status = Status.SELECT_PIECE;
                 cellSelect = GameObject.Find(n);
                 oldCell = GameObject.Find(o);
                 pieceSelect = oldCell.GetComponent<State>().piece;
-                movePiece();
+                movePiece(o, n);
             });            
         }  
     }
@@ -217,11 +235,23 @@ public class BoardManager : MonoBehaviour
         oldCell = null;
     }
 
+    public void ResetGame()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentSceneName);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (IsHumanVSIA() && IsTurnIA())
         {
+            status = Status.MOVE_PIECE;
             MovePiece();
             return;
         }

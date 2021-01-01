@@ -30,10 +30,11 @@ public class State : MonoBehaviour
         {
             // Move our position a step closer to the target.
             float step = speed * Time.deltaTime; // calculate distance to move
-            transform.position = Vector3.MoveTowards(transform.position, target.position, step);
+            Vector3 target_v = new Vector3(target.position.x, transform.position.y, target.position.z);
+            transform.position = Vector3.MoveTowards(transform.position, target_v , step);
 
             // Check if the position of the cube and sphere are approximately equal.
-            if (Vector3.Distance(transform.position, target.position) < 0.0000001f)
+            if (Vector3.Distance(transform.position, target_v) < 0.0000001f)
             {
                 isMoving = false;
                 cb();
