@@ -27,6 +27,11 @@ public class Menu : MonoBehaviour
         SceneManager.LoadScene("Mode", LoadSceneMode.Single);
     }
 
+    public void PulsarTextures()
+    {
+        SceneManager.LoadScene("Textures", LoadSceneMode.Single);
+    }
+
     public void PulsarCredits()
     {
         SceneManager.LoadScene("Credits", LoadSceneMode.Single);
