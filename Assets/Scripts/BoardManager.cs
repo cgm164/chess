@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using System;
 public class BoardManager : MonoBehaviour
 {
     public GameObject cell;
@@ -12,7 +12,8 @@ public class BoardManager : MonoBehaviour
     public GameObject sharp;
     public GameObject queen;
     public GameObject king;
-
+    public Material material_madera;
+    public Material material_marmol;
     public GameObject camera;
 
     public Color black;
@@ -293,6 +294,47 @@ public class BoardManager : MonoBehaviour
                 MovePiece();
             }
 
+        }
+    }
+    public void ChangeMaterialWood(){
+        GameObject[] objects = SceneManager.GetActiveScene().GetRootGameObjects();
+        foreach(var root in objects){
+            if(root.GetComponent<MeshRenderer>()!=null && Char.IsUpper(root.name, 0)){
+
+                root.GetComponent<MeshRenderer>().material = material_madera;
+                
+            }
+            
+        }
+        //this.gameObject.GetComponent<MeshRenderer>().material = null;
+        //obj.GetComponent<MeshRenderer>().material = material_madera;
+        
+        //obj.GetComponent<State>().color = color;
+
+    }
+
+    public void ChangeMaterialMarble(){
+        GameObject[] objects = SceneManager.GetActiveScene().GetRootGameObjects();
+        foreach(var root in objects){
+            if(root.GetComponent<MeshRenderer>()!=null && Char.IsUpper(root.name, 0)){
+
+                //root.GetComponent<MeshRenderer>().material = material_marmol;
+                root.GetComponent<Renderer>().material = material_marmol;
+                
+            }
+            
+        }
+    }
+    public void ChangeMaterialCrystal(){
+
+    }
+    public void ResetMaterialToColour(){
+        GameObject[] objects = SceneManager.GetActiveScene().GetRootGameObjects();
+        foreach(var root in objects){
+            if(root.GetComponent<MeshRenderer>()!=null){
+                SetColor(root, GetOriginalColor(root));
+            }
+            
         }
     }
 }
