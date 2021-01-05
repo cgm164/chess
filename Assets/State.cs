@@ -6,6 +6,7 @@ public class State : MonoBehaviour
 {
     public GameObject piece;
     public Color color;
+    public BoardManager.Turn player;
 
     public float speed = 0.1f;
     public Transform target;
