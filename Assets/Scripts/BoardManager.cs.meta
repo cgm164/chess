@@ -3,7 +3,21 @@ guid: 0dc915d348f53724bab1fa7eceb7c770
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - cell: {instanceID: 0}
+  - pawn: {instanceID: 0}
+  - horse: {instanceID: 0}
+  - rook: {instanceID: 0}
+  - sharp: {instanceID: 0}
+  - queen: {instanceID: 0}
+  - king: {instanceID: 0}
+  - material_madera_clara: {fileID: 2100000, guid: c009181e785b244d59701813ffff60fc, type: 2}
+  - material_madera_oscura: {fileID: 2100000, guid: 7f8aa77aad12a40d6808e4704b919e21, type: 2}
+  - material_marmol_claro: {fileID: 2100000, guid: 26509f6aaeae24ed1ac7fd126a6a5b23, type: 2}
+  - material_marmol_oscuro: {fileID: 2100000, guid: df1b30b85396c47afb6817ef6ee4e78d, type: 2}
+  - material_oro: {fileID: 2100000, guid: b4e3d0a0bee2c4f2f808c27e280d7d11, type: 2}
+  - material_plata: {fileID: 2100000, guid: bfe8c98892cc2456d953b959ea5fe64c, type: 2}
+  - camera: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

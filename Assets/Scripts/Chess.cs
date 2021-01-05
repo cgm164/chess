@@ -26,9 +26,7 @@ public class Chess : MonoBehaviour
 
     public void Move(string movement, BoardManager.EndToMove callback, BoardManager.EndToMoveStatus error)
     {
-        string nextStatus = status + movement;
-
-        Debug.Log(nextStatus);
+        string nextStatus = status + movement; 
 
         StartCoroutine(Request($"http://chess-api.herokuapp.com/valid_move/{nextStatus}", result =>
         {
@@ -44,6 +42,23 @@ public class Chess : MonoBehaviour
         }));
     }
 
+    public enum GameStatus {
+        white_won,
+        black_won,
+        stalemate,
+        in_progress
+    };
+
+    public delegate void StatusEvent(GameStatus nn);
+
+    public void GetStatusGame(StatusEvent cb)
+    {
+        StartCoroutine(Request($"http://chess-api.herokuapp.com/status/{status}", result =>
+        {
+            cb((GameStatus)Enum.Parse(typeof(GameStatus), result["gameStatus"]));
+        }));
+    }
+
     public delegate void MoveEvent(string oldC, string newC);
 
     public void Move(MoveEvent moveEvent)
@@ -55,9 +70,6 @@ public class Chess : MonoBehaviour
             string r = result["bestNext"];
             string oldC = $"{r[0]}{r[1]}";
             string newC = $"{r[2]}{r[3]}";
-            Debug.Log(oldC);
-            Debug.Log(newC);
-            Debug.Log(r);
             moveEvent(oldC, newC);
         }));
     }

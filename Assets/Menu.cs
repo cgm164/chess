@@ -27,20 +27,18 @@ public class Menu : MonoBehaviour
         SceneManager.LoadScene("Mode", LoadSceneMode.Single);
     }
 
+    public void PulsarTextures()
+    {
+        SceneManager.LoadScene("Textures", LoadSceneMode.Single);
+    }
+
     public void PulsarCredits()
     {
         SceneManager.LoadScene("Credits", LoadSceneMode.Single);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void OnExit()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Application.Quit();
     }
 }
