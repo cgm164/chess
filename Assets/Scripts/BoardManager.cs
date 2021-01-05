@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using System;
 public class BoardManager : MonoBehaviour
 {
     public GameObject cell;
@@ -12,7 +12,12 @@ public class BoardManager : MonoBehaviour
     public GameObject sharp;
     public GameObject queen;
     public GameObject king;
-
+    public Material material_madera_clara;
+    public Material material_madera_oscura;
+    public Material material_marmol_claro;
+    public Material material_marmol_oscuro;
+    public Material material_oro;
+    public Material material_plata;
     public GameObject camera;
 
     public Color black;
@@ -294,6 +299,76 @@ public class BoardManager : MonoBehaviour
                 MovePiece();
             }
 
+        }
+    }
+    public void ChangeMaterialWood(){
+        ChangeMaterial(material_madera_oscura, material_madera_clara);
+
+        
+        //this.gameObject.GetComponent<MeshRenderer>().material = null;
+        //obj.GetComponent<MeshRenderer>().material = material_madera;
+        
+        //obj.GetComponent<State>().color = color;
+
+    }
+    private void ChangePieceMaterial(){
+        
+    }
+    private void ChangeCellMaterial(){
+
+    }
+    public void ChangeMaterialMarble(){
+        ChangeMaterial(material_marmol_oscuro, material_marmol_claro);
+    }
+    public void ChangeMaterialGS(){
+        ChangeMaterial(material_oro, material_plata);
+    }
+    //Material1=oscuro, Material2=claro
+    private void ChangeMaterial(Material material1, Material material2){
+        int y=0;
+        GameObject[] objects = SceneManager.GetActiveScene().GetRootGameObjects();
+        foreach(var root in objects){
+            if(root.GetComponent<MeshRenderer>()!=null && Char.IsUpper(root.name, 0)){
+
+                if(y==3) {
+                    root.GetComponent<MeshRenderer>().material = material1;
+                    y=4;
+                }
+                else if(y==4){
+                    root.GetComponent<MeshRenderer>().material = material1;
+                    y=1;
+                }
+                else{
+                    root.GetComponent<MeshRenderer>().material = material2;
+                    y++;
+                }
+
+
+            }
+        }
+    }
+    public void ResetMaterialToColour(){
+        int y=0;
+        GameObject[] objects = SceneManager.GetActiveScene().GetRootGameObjects();
+        foreach(var root in objects){
+            if(root.GetComponent<MeshRenderer>()!=null && Char.IsUpper(root.name, 0)){
+                if(y==3) {
+                    root.GetComponent<MeshRenderer>().material.color = black;
+                    root.GetComponent<State>().color = black;
+                    y=4;
+                }
+                else if(y==4){
+                    root.GetComponent<MeshRenderer>().material.color = black;
+                    root.GetComponent<State>().color = black;
+                    y=1;
+                }
+                else{
+                    root.GetComponent<MeshRenderer>().material.color = white;
+                    root.GetComponent<State>().color = white;
+                    y++;
+                }
+            }
+            
         }
     }
 }
