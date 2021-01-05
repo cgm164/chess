@@ -481,7 +481,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 682369649}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1429804282}
+        m_TargetAssemblyTypeName: BoardManager, Assembly-CSharp
+        m_MethodName: ChangeMaterialGS
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &682369649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1667,9 +1679,13 @@ MonoBehaviour:
   sharp: {fileID: 7968039949776864307, guid: 665f181c04335db41b7394f6beca5a06, type: 3}
   queen: {fileID: 685649585958538712, guid: 09cb4548f569249428fa8ac6be8502ea, type: 3}
   king: {fileID: 3560818936109126895, guid: 6e5bdd799506ebf40a24f66d80c0b395, type: 3}
+  material_madera_clara: {fileID: 2100000, guid: c009181e785b244d59701813ffff60fc, type: 2}
+  material_madera_oscura: {fileID: 2100000, guid: 7f8aa77aad12a40d6808e4704b919e21, type: 2}
+  material_marmol_claro: {fileID: 2100000, guid: 26509f6aaeae24ed1ac7fd126a6a5b23, type: 2}
+  material_marmol_oscuro: {fileID: 2100000, guid: df1b30b85396c47afb6817ef6ee4e78d, type: 2}
+  material_oro: {fileID: 2100000, guid: b4e3d0a0bee2c4f2f808c27e280d7d11, type: 2}
+  material_plata: {fileID: 2100000, guid: bfe8c98892cc2456d953b959ea5fe64c, type: 2}
   camera: {fileID: 963194225}
-  material_madera: {fileID: 2100000, guid: 8c0e2558b084446298d310c3a741449e, type: 2}
-  material_marmol: {fileID: 2100000, guid: 4ed0f3510558c4776949988a032795fb, type: 2}
   black: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 0}
   white: {r: 1, g: 1, b: 1, a: 0}
   typeGame: 0
@@ -1699,8 +1715,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce09cce97bf6d4642a1bbf5be797bb77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material_madera: {fileID: 2100000, guid: 8c0e2558b084446298d310c3a741449e, type: 2}
-  material_marmol: {fileID: 2100000, guid: 4ed0f3510558c4776949988a032795fb, type: 2}
 --- !u!1 &1552026739
 GameObject:
   m_ObjectHideFlags: 0
@@ -1931,7 +1945,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Crystal
+  m_Text: Gold/Silver
 --- !u!222 &1731720779
 CanvasRenderer:
   m_ObjectHideFlags: 0
