@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Linq;
 using System;
 public class BoardManager : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class BoardManager : MonoBehaviour
     public Color black;
     public Color white;
 
-    private Color turn;
+    private Turn turn;
     public TypeGame typeGame = TypeGame.IA;
 
     Ray ray;
@@ -51,10 +52,17 @@ public class BoardManager : MonoBehaviour
         HUMAN
     };
 
+    public enum Turn
+    {
+        BLACK, 
+        WHITE
+    };
 
-    private void GeneratePiece(GameObject obj, GameObject piece, float height, float rotation, Color color)
+
+    private void GeneratePiece(GameObject obj, string name, GameObject piece, float height, float rotation, Color color, Turn player)
     {
         GameObject iPiece = Instantiate(piece);
+        iPiece.name = name + (player == Turn.BLACK? "black" : "white");
         float x = obj.transform.position.x;
         float y = obj.transform.position.y;
         float z = obj.transform.position.z;
@@ -62,6 +70,7 @@ public class BoardManager : MonoBehaviour
         iPiece.transform.position += new Vector3(x, y + height, z);
         iPiece.transform.rotation  = Quaternion.Euler(piece.transform.rotation.eulerAngles.x, piece.transform.eulerAngles.y + rotation, piece.transform.rotation.eulerAngles.z);
         iPiece.GetComponent<State>().color = color;
+        iPiece.GetComponent<State>().player = player;
         addColor(iPiece, color);
 
         obj.GetComponent<State>().piece = iPiece;
@@ -92,26 +101,28 @@ public class BoardManager : MonoBehaviour
 
 
                 obj.name = char.ConvertFromUtf32(i + 97) + "" + (j + 1);
+                string name = "piece" + obj.name;
 
                 if (j == 1 || j == 6)
                 {
-                    GeneratePiece(obj, pawn, height, 0, j == 1? white : black);
+                    GeneratePiece(obj, name, pawn, height, 0, j == 1? white : black, j == 1 ? Turn.WHITE : Turn.BLACK);
 
                 } else if (j == 0 || j == 7)
                 {
                     float rotation = j == 0 ? 0 : -180;
                     Color color = j == 0 ? white : black;
+                    Turn turn = j == 0 ? Turn.WHITE : Turn.BLACK;
 
                     if (i == 0 || i == 7)
-                        GeneratePiece(obj, rook, height, rotation, color);
+                        GeneratePiece(obj, name, rook, height, rotation, color, turn);
                     else if (i == 1 || i == 6)
-                        GeneratePiece(obj, horse, height, rotation, color);
+                        GeneratePiece(obj, name, horse, height, rotation, color, turn);
                     else if (i == 2 || i == 5)
-                        GeneratePiece(obj, sharp, height, rotation, color);
+                        GeneratePiece(obj, name, sharp, height, rotation, color, turn);
                     else if (i == 3)
-                        GeneratePiece(obj, queen, height, rotation, color);
+                        GeneratePiece(obj, name, queen, height, rotation, color, turn);
                     else 
-                        GeneratePiece(obj, king, height, rotation, color);
+                        GeneratePiece(obj, name, king, height, rotation, color, turn);
                 }
             }
         cell.SetActive(false);
@@ -123,7 +134,7 @@ public class BoardManager : MonoBehaviour
         GenerateBoard();
         moveManager = gameObject.AddComponent<Rotation>();
         chess = gameObject.AddComponent<Chess>();
-        turn = white;
+        turn = Turn.WHITE;
         typeGame = PlayerPrefs.GetInt("modoJuego") == 0 ? TypeGame.HUMAN : TypeGame.IA;
     }
 
@@ -140,20 +151,13 @@ public class BoardManager : MonoBehaviour
             cellSelect = null;
             if (change)
                 status = Status.SELECT_PIECE;
+
         }
 
         void movePiece(string o, string n)
         {
             pieceSelect.GetComponent<State>().Move(cellSelect, () =>
             {
-                //if (typeGame == TypeGame.HUMAN)
-                //{
-                //    Vector3 v = camera.transform.rotation.eulerAngles;
-
-                //    StartCoroutine(moveManager.Rotate(camera.transform, Quaternion.Euler(v.x, v.y + 180, v.z), 1f));
-                //    StartCoroutine(moveManager.Translation(camera.transform, new Vector3(0, 0, turn == white ? 37 : -37), 1f, Rotation.MoveType.Time));
-                //}
-
                 if (cellSelect.GetComponent<State>().piece != null)
                     Destroy(cellSelect.GetComponent<State>().piece);
 
@@ -161,20 +165,30 @@ public class BoardManager : MonoBehaviour
                 oldCell.GetComponent<State>().piece = null;
                 
                 int index = castlingsMoves.IndexOf(o + n);
-                generic(index == -1);
 
-                if (index != -1)
+                chess.GetStatusGame((Chess.GameStatus st) =>
                 {
-                    cellSelect = GameObject.Find(castlingsRookR[index]);
-                    oldCell = GameObject.Find(castlingsRookL[index]);
-                    pieceSelect = oldCell.GetComponent<State>().piece;
-                    movePiece(castlingsRookL[index], castlingsRookR[index]);
-                } else
-                    turn = turn == white ? black : white;
+                    if (st == Chess.GameStatus.in_progress)
+                    {
+                        generic(index == -1);
+
+                        if (index != -1)
+                        {
+                            cellSelect = GameObject.Find(castlingsRookR[index]);
+                            oldCell = GameObject.Find(castlingsRookL[index]);
+                            pieceSelect = oldCell.GetComponent<State>().piece;
+                            movePiece(castlingsRookL[index], castlingsRookR[index]);
+                        }
+                        else
+                            turn = turn == Turn.WHITE ? Turn.BLACK : Turn.WHITE;
+                        return;
+                    }
+                    Debug.Log("GAME OVER");
+                });
             });
         }
 
-        if (typeGame == TypeGame.HUMAN || turn == white)
+        if (typeGame == TypeGame.HUMAN || turn == Turn.WHITE)
         {
             string oldC = oldCell.name;
             string newC = cellSelect.name;
@@ -201,7 +215,7 @@ public class BoardManager : MonoBehaviour
 
     private bool IsTurnIA()
     {
-        return status == Status.SELECT_PIECE && turn == black; 
+        return status == Status.SELECT_PIECE && turn == Turn.BLACK; 
     }
 
     private GameObject GetClickedCell()
@@ -223,6 +237,12 @@ public class BoardManager : MonoBehaviour
     {
         return obj.GetComponent<State>().color;
     }
+
+    private Turn GetPlayer(GameObject obj)
+    {
+        return obj.GetComponent<State>().player;
+    }
+
 
     private void SetColor(GameObject obj, Color color)
     {
@@ -285,7 +305,7 @@ public class BoardManager : MonoBehaviour
                 pieceSelect = piece;
                 oldCell     = cell;
 
-                if (GetOriginalColor(piece) == turn)
+                if (GetPlayer(piece) == turn)
                 {
                     status = Status.SELECT_CELL;
                     SetColor(pieceSelect, Color.red);
@@ -301,75 +321,37 @@ public class BoardManager : MonoBehaviour
 
         }
     }
-    public void ChangeMaterialWood(){
-        ChangeMaterial(material_madera_oscura, material_madera_clara);
-
-        
-        //this.gameObject.GetComponent<MeshRenderer>().material = null;
-        //obj.GetComponent<MeshRenderer>().material = material_madera;
-        
-        //obj.GetComponent<State>().color = color;
-
-    }
     private void ChangePieceMaterial(){
         
     }
     private void ChangeCellMaterial(){
 
     }
+    private void addMaterial(GameObject obj, Material m)
+    {
+        obj.GetComponent<MeshRenderer>().material = m;
+        obj.GetComponent<State>().color = m.color;
+    }
+
+    public void ChangeMaterialWood()
+    {
+        ChangeMaterial(material_madera_oscura, material_madera_clara);
+    }
+
     public void ChangeMaterialMarble(){
         ChangeMaterial(material_marmol_oscuro, material_marmol_claro);
     }
     public void ChangeMaterialGS(){
         ChangeMaterial(material_oro, material_plata);
     }
-    //Material1=oscuro, Material2=claro
-    private void ChangeMaterial(Material material1, Material material2){
-        int y=0;
-        GameObject[] objects = SceneManager.GetActiveScene().GetRootGameObjects();
-        foreach(var root in objects){
-            if(root.GetComponent<MeshRenderer>()!=null && Char.IsUpper(root.name, 0)){
 
-                if(y==3) {
-                    root.GetComponent<MeshRenderer>().material = material1;
-                    y=4;
-                }
-                else if(y==4){
-                    root.GetComponent<MeshRenderer>().material = material1;
-                    y=1;
-                }
-                else{
-                    root.GetComponent<MeshRenderer>().material = material2;
-                    y++;
-                }
+    private void ChangeMaterial(Material m1, Material m2) 
+    {
+        GameObject[] objects = SceneManager.GetActiveScene().GetRootGameObjects().Where(c => c.name.Contains("piece")).ToArray();
+        black = m1.color;
+        white = m2.color;
 
-
-            }
-        }
-
-    }
-    public void ResetMaterialToColour(){
-        int y=0;
-        GameObject[] objects = SceneManager.GetActiveScene().GetRootGameObjects();
-        foreach(var root in objects){
-            if(root.GetComponent<MeshRenderer>()!=null && Char.IsUpper(root.name, 0)){
-                if(y==3) {
-                    root.GetComponent<MeshRenderer>().material.color = black;
-                    root.GetComponent<State>().color = black;
-                    y=4;
-                }
-                else if(y==4){
-                    root.GetComponent<MeshRenderer>().material.color = black;
-                    root.GetComponent<State>().color = black;
-                    y=1;
-                }
-                else{
-                    root.GetComponent<MeshRenderer>().material.color = white;
-                    root.GetComponent<State>().color = white;
-                    y++;
-                }
-            }
-            
-        }
+        foreach (GameObject piece in objects)
+            addMaterial(piece, piece.name.Contains("black")? m1 : m2);
     }
 }
