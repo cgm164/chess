@@ -119,6 +119,7 @@ public class BoardManager : MonoBehaviour
         moveManager = gameObject.AddComponent<Rotation>();
         chess = gameObject.AddComponent<Chess>();
         turn = white;
+        typeGame = PlayerPrefs.GetInt("modoJuego") == 0 ? TypeGame.HUMAN : TypeGame.IA;
     }
 
     public delegate void EndToMove();
@@ -140,13 +141,13 @@ public class BoardManager : MonoBehaviour
         {
             pieceSelect.GetComponent<State>().Move(cellSelect, () =>
             {
-                if (typeGame == TypeGame.HUMAN)
-                {
-                    Vector3 v = camera.transform.rotation.eulerAngles;
+                //if (typeGame == TypeGame.HUMAN)
+                //{
+                //    Vector3 v = camera.transform.rotation.eulerAngles;
 
-                    StartCoroutine(moveManager.Rotate(camera.transform, Quaternion.Euler(v.x, v.y + 180, v.z), 1f));
-                    StartCoroutine(moveManager.Translation(camera.transform, new Vector3(0, 0, turn == white ? 37 : -37), 1f, Rotation.MoveType.Time));
-                }
+                //    StartCoroutine(moveManager.Rotate(camera.transform, Quaternion.Euler(v.x, v.y + 180, v.z), 1f));
+                //    StartCoroutine(moveManager.Translation(camera.transform, new Vector3(0, 0, turn == white ? 37 : -37), 1f, Rotation.MoveType.Time));
+                //}
 
                 if (cellSelect.GetComponent<State>().piece != null)
                     Destroy(cellSelect.GetComponent<State>().piece);

@@ -919,7 +919,6 @@ GameObject:
   - component: {fileID: 1278571951}
   - component: {fileID: 1278571950}
   - component: {fileID: 1278571949}
-  - component: {fileID: 1278571948}
   m_Layer: 0
   m_Name: ExitButton
   m_TagString: Untagged
@@ -947,29 +946,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -90}
   m_SizeDelta: {x: 160, y: 48}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1278571948
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1278571946}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dc915d348f53724bab1fa7eceb7c770, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cell: {fileID: 0}
-  pawn: {fileID: 0}
-  horse: {fileID: 0}
-  rook: {fileID: 0}
-  sharp: {fileID: 0}
-  queen: {fileID: 0}
-  king: {fileID: 0}
-  camera: {fileID: 0}
-  black: {r: 0, g: 0, b: 0, a: 0}
-  white: {r: 0, g: 0, b: 0, a: 0}
-  typeGame: 0
 --- !u!114 &1278571949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1013,9 +989,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1278571948}
-        m_TargetAssemblyTypeName: BoardManager, Assembly-CSharp
-        m_MethodName: QuitGame
+      - m_Target: {fileID: 384535088}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: OnExit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
