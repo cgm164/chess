@@ -345,7 +345,6 @@ public class BoardManager : MonoBehaviour
 
             }
         }
-
     }
     public void ResetMaterialToColour(){
         int y=0;
