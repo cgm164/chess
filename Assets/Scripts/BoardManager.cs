@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using System.Linq;
 using System;
 public class BoardManager : MonoBehaviour
@@ -19,17 +20,24 @@ public class BoardManager : MonoBehaviour
     public Material material_marmol_oscuro;
     public Material material_oro;
     public Material material_plata;
+    public CountDown timerW;
+    public CountDown timerB; 
     public GameObject camera;
+
+    public GameObject islandW;
+    public GameObject islandB;
+
+    public float time;
 
     public Color black;
     public Color white;
-
     private Turn turn;
     public TypeGame typeGame = TypeGame.IA;
 
     Ray ray;
     RaycastHit hit;
 
+    private bool isGameEnding = false;
     private GameObject pieceSelect;
     private GameObject oldCell;
     private GameObject cellSelect;
@@ -59,7 +67,7 @@ public class BoardManager : MonoBehaviour
     };
 
 
-    private void GeneratePiece(GameObject obj, string name, GameObject piece, float height, float rotation, Color color, Turn player)
+    private void GeneratePiece(GameObject obj, string name, int points, GameObject piece, float height, float rotation, Color color, Turn player)
     {
         GameObject iPiece = Instantiate(piece);
         iPiece.name = name + (player == Turn.BLACK? "black" : "white");
@@ -71,6 +79,7 @@ public class BoardManager : MonoBehaviour
         iPiece.transform.rotation  = Quaternion.Euler(piece.transform.rotation.eulerAngles.x, piece.transform.eulerAngles.y + rotation, piece.transform.rotation.eulerAngles.z);
         iPiece.GetComponent<State>().color = color;
         iPiece.GetComponent<State>().player = player;
+        iPiece.GetComponent<State>().points = points;
         addColor(iPiece, color);
 
         obj.GetComponent<State>().piece = iPiece;
@@ -105,7 +114,7 @@ public class BoardManager : MonoBehaviour
 
                 if (j == 1 || j == 6)
                 {
-                    GeneratePiece(obj, name, pawn, height, 0, j == 1? white : black, j == 1 ? Turn.WHITE : Turn.BLACK);
+                    GeneratePiece(obj, name, 1, pawn, height, 0, j == 1? white : black, j == 1 ? Turn.WHITE : Turn.BLACK);
 
                 } else if (j == 0 || j == 7)
                 {
@@ -114,15 +123,15 @@ public class BoardManager : MonoBehaviour
                     Turn turn = j == 0 ? Turn.WHITE : Turn.BLACK;
 
                     if (i == 0 || i == 7)
-                        GeneratePiece(obj, name, rook, height, rotation, color, turn);
+                        GeneratePiece(obj, name, 3, rook, height, rotation, color, turn);
                     else if (i == 1 || i == 6)
-                        GeneratePiece(obj, name, horse, height, rotation, color, turn);
+                        GeneratePiece(obj, name, 2, horse, height, rotation, color, turn);
                     else if (i == 2 || i == 5)
-                        GeneratePiece(obj, name, sharp, height, rotation, color, turn);
+                        GeneratePiece(obj, name, 2, sharp, height, rotation, color, turn);
                     else if (i == 3)
-                        GeneratePiece(obj, name, queen, height, rotation, color, turn);
+                        GeneratePiece(obj, name, 4, queen, height, rotation, color, turn);
                     else 
-                        GeneratePiece(obj, name, king, height, rotation, color, turn);
+                        GeneratePiece(obj, name, 100, king, height, rotation, color, turn);
                 }
             }
         cell.SetActive(false);
@@ -136,11 +145,54 @@ public class BoardManager : MonoBehaviour
         chess = gameObject.AddComponent<Chess>();
         turn = Turn.WHITE;
         typeGame = PlayerPrefs.GetInt("modoJuego") == 0 ? TypeGame.HUMAN : TypeGame.IA;
+        isGameEnding = true;
+        islandB.GetComponent<MeshRenderer>().material.color = Color.white;
+        timerW.startTimer(time);
+        timerB.startTimer(time);
     }
 
     public delegate void EndToMove();
     public delegate void EndToMoveStatus(bool a);
 
+    public void StartGame()
+    {
+        timerW.stop = false;
+        isGameEnding = false;
+    }
+
+    private int CountPointsIsland(GameObject island)
+    {
+        int points = 0;
+
+        foreach (Transform child in island.transform.parent)
+        {
+            Debug.Log(child.gameObject.name);
+            if (child.gameObject.name.Contains("piece"))
+                points += child.GetComponent<State>().points;
+        }
+
+        return points;
+    }
+
+    private void CheckTimeout()
+    {
+        float timeB = timerB.timeLeft;
+        float timeW = timerW.timeLeft;
+
+        if ((timeB < 0 || timeW < 0) && !isGameEnding)
+        {
+            //int whitePoints = CountPointsIsland(islandW);
+            //int blackPoints = CountPointsIsland(islandB);
+            isGameEnding = true;
+            if (timeB < 0)
+                Debug.Log("Negras ganan");
+            else
+                Debug.Log("Blancas ganan");
+        } 
+    }
+
+    private int iIslandW = 0;
+    private int iIslandB = 0;
     void MovePiece()
     {
         void generic(bool change)
@@ -154,12 +206,48 @@ public class BoardManager : MonoBehaviour
 
         }
 
+        void AddIntoIslandW(GameObject piece)
+        {
+            int i = iIslandW % 8;
+            int j = iIslandW / 8;
+            GameObject cellIsland = Instantiate(islandW, islandW.transform.parent);
+            cellIsland.SetActive(true);
+            float size   = cellIsland.GetComponent<Collider>().bounds.size.x;
+            float height = cellIsland.GetComponent<Collider>().bounds.size.y;
+
+            cellIsland.transform.position += new Vector3(j * size, 0, -i * size);
+            piece.transform.position = cellIsland.transform.position + new Vector3(0, piece.transform.position.y, 0);
+            piece.transform.rotation = Quaternion.Euler(piece.transform.rotation.eulerAngles.x, piece.transform.eulerAngles.y + 180, piece.transform.rotation.eulerAngles.z);
+            piece.transform.parent = islandW.transform.parent;
+            iIslandW++;
+        }
+
+        void AddIntoIslandB(GameObject piece)
+        {
+            int i = iIslandB % 8;
+            int j = iIslandB / 8;
+            GameObject cellIsland = Instantiate(islandB, islandB.transform.parent);
+            cellIsland.SetActive(true);
+            float size = cellIsland.GetComponent<Collider>().bounds.size.x;
+            float height = cellIsland.GetComponent<Collider>().bounds.size.y;
+
+            cellIsland.transform.position += new Vector3(-j * size, 0, -i * size);
+            piece.transform.position = cellIsland.transform.position + new Vector3(0, piece.transform.position.y, 0);
+            piece.transform.parent = islandB.transform.parent;
+            iIslandB++;
+        }
+
         void movePiece(string o, string n)
         {
             pieceSelect.GetComponent<State>().Move(cellSelect, () =>
             {
                 if (cellSelect.GetComponent<State>().piece != null)
-                    Destroy(cellSelect.GetComponent<State>().piece);
+                {
+                    if (turn == Turn.WHITE)
+                        AddIntoIslandB(cellSelect.GetComponent<State>().piece);
+                    else
+                        AddIntoIslandW(cellSelect.GetComponent<State>().piece);
+                }   
 
                 cellSelect.GetComponent<State>().piece = pieceSelect;
                 oldCell.GetComponent<State>().piece = null;
@@ -180,7 +268,12 @@ public class BoardManager : MonoBehaviour
                             movePiece(castlingsRookL[index], castlingsRookR[index]);
                         }
                         else
+                        {
+                            timerW.stop = turn == Turn.WHITE;
+                            timerB.stop = turn == Turn.BLACK;
                             turn = turn == Turn.WHITE ? Turn.BLACK : Turn.WHITE;
+                        }
+                            
                         return;
                     }
                     Debug.Log("GAME OVER");
@@ -243,7 +336,6 @@ public class BoardManager : MonoBehaviour
         return obj.GetComponent<State>().player;
     }
 
-
     private void SetColor(GameObject obj, Color color)
     {
         obj.GetComponent<MeshRenderer>().material.color = color;
@@ -275,6 +367,11 @@ public class BoardManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isGameEnding)
+            return;
+
+        CheckTimeout();
+
         if (IsHumanVSIA() && IsTurnIA())
         {
             status = Status.MOVE_PIECE;

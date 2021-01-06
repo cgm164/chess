@@ -10,6 +10,7 @@ public class State : MonoBehaviour
 
     public float speed = 0.1f;
     public Transform target;
+    public int points = 0;
 
     private bool isMoving = false;
     private BoardManager.EndToMove cb;
