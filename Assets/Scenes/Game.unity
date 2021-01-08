@@ -215,7 +215,7 @@ GameObject:
   - component: {fileID: 268549894}
   - component: {fileID: 268549893}
   m_Layer: 5
-  m_Name: Button
+  m_Name: MarbleButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -413,7 +413,7 @@ GameObject:
   - component: {fileID: 682369649}
   - component: {fileID: 682369648}
   m_Layer: 5
-  m_Name: Button
+  m_Name: GSButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1640,9 +1640,13 @@ MonoBehaviour:
   material_marmol_oscuro: {fileID: 2100000, guid: df1b30b85396c47afb6817ef6ee4e78d, type: 2}
   material_oro: {fileID: 2100000, guid: b4e3d0a0bee2c4f2f808c27e280d7d11, type: 2}
   material_plata: {fileID: 2100000, guid: bfe8c98892cc2456d953b959ea5fe64c, type: 2}
+  material_negro: {fileID: 2100000, guid: be298149f4a8e49dc8d1a03b672c44e0, type: 2}
+  material_blanco: {fileID: 2100000, guid: baa2d3c668e794c3abc28b2773342087, type: 2}
   timerW: {fileID: 1429804285}
   timerB: {fileID: 1429804284}
   camera: {fileID: 963194225}
+  islandW: {fileID: 0}
+  islandB: {fileID: 0}
   time: 1800
   black: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 0}
   white: {r: 1, g: 1, b: 1, a: 0}
@@ -2183,7 +2187,7 @@ GameObject:
   - component: {fileID: 1818780214}
   - component: {fileID: 1818780213}
   m_Layer: 5
-  m_Name: Button
+  m_Name: WoodenButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

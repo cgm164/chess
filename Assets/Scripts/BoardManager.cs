@@ -20,6 +20,8 @@ public class BoardManager : MonoBehaviour
     public Material material_marmol_oscuro;
     public Material material_oro;
     public Material material_plata;
+    public Material material_negro;
+    public Material material_blanco;
     public CountDown timerW;
     public CountDown timerB; 
     public GameObject camera;
@@ -440,6 +442,9 @@ public class BoardManager : MonoBehaviour
     }
     public void ChangeMaterialGS(){
         ChangeMaterial(material_oro, material_plata);
+    }
+     public void ResetColour(){
+        ChangeMaterial(material_negro, material_blanco);
     }
     
     private void ChangeMaterial(Material m1, Material m2) 

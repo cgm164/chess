@@ -17,7 +17,13 @@ MonoImporter:
   - material_marmol_oscuro: {fileID: 2100000, guid: df1b30b85396c47afb6817ef6ee4e78d, type: 2}
   - material_oro: {fileID: 2100000, guid: b4e3d0a0bee2c4f2f808c27e280d7d11, type: 2}
   - material_plata: {fileID: 2100000, guid: bfe8c98892cc2456d953b959ea5fe64c, type: 2}
+  - material_negro: {fileID: 2100000, guid: be298149f4a8e49dc8d1a03b672c44e0, type: 2}
+  - material_blanco: {fileID: 2100000, guid: baa2d3c668e794c3abc28b2773342087, type: 2}
+  - timerW: {instanceID: 0}
+  - timerB: {instanceID: 0}
   - camera: {instanceID: 0}
+  - islandW: {instanceID: 0}
+  - islandB: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
