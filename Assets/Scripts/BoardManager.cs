@@ -206,8 +206,9 @@ public class BoardManager : MonoBehaviour
 
         }
 
-        void AddIntoIslandW(GameObject piece)
+        void AddIntoIslandW(GameObject _piece)
         {
+            GameObject piece = Instantiate(_piece);
             int i = iIslandW % 8;
             int j = iIslandW / 8;
             GameObject cellIsland = Instantiate(islandW, islandW.transform.parent);
@@ -222,8 +223,9 @@ public class BoardManager : MonoBehaviour
             iIslandW++;
         }
 
-        void AddIntoIslandB(GameObject piece)
+        void AddIntoIslandB(GameObject _piece)
         {
+            GameObject piece = Instantiate(_piece);
             int i = iIslandB % 8;
             int j = iIslandB / 8;
             GameObject cellIsland = Instantiate(islandB, islandB.transform.parent);
@@ -239,19 +241,18 @@ public class BoardManager : MonoBehaviour
 
         void movePiece(string o, string n)
         {
+            if (cellSelect.GetComponent<State>().piece != null)
+            {
+                if (turn == Turn.WHITE)
+                   AddIntoIslandB(cellSelect.GetComponent<State>().piece);
+                else
+                    AddIntoIslandW(cellSelect.GetComponent<State>().piece);
+                StartCoroutine(cellSelect.GetComponent<State>().piece.GetComponent<PieceBehaviour>().Capture());
+            }
+
             pieceSelect.GetComponent<State>().Move(cellSelect, () =>
             {
-                if (cellSelect.GetComponent<State>().piece != null)
-                {
-                    if (turn == Turn.WHITE)
-                        AddIntoIslandB(cellSelect.GetComponent<State>().piece);
-                    else
-                        AddIntoIslandW(cellSelect.GetComponent<State>().piece);
-                }   
-
                 cellSelect.GetComponent<State>().piece = pieceSelect;
-
-                StartCoroutine(oldCell.GetComponent<State>().piece.GetComponent<PieceBehaviour>().Capture());
                 oldCell.GetComponent<State>().piece = null;
                 
                 int index = castlingsMoves.IndexOf(o + n);

@@ -99,7 +99,7 @@ MonoBehaviour:
   piece: {fileID: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
   player: 0
-  speed: 15
+  speed: 7.5
   target: {fileID: 0}
   points: 0
 --- !u!114 &1783475967728128727

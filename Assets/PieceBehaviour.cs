@@ -28,7 +28,7 @@ public class PieceBehaviour : MonoBehaviour
             yield return null;
         }
 
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 
 }
