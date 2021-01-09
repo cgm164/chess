@@ -3111,6 +3111,7 @@ MonoBehaviour:
   ButtonMetal: {fileID: 1835261138}
   ButtonMarble: {fileID: 1590893905}
   panelTexture: {fileID: 1541265232}
+  ButtonOpciones: {fileID: 1351488816}
 --- !u!1 &1487065898
 GameObject:
   m_ObjectHideFlags: 0
