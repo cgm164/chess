@@ -170,8 +170,8 @@ public class BoardManager : MonoBehaviour
 
     public void ContinueGame()
     {
-        timerW.stop = turn == Turn.WHITE;
-        timerB.stop = turn == Turn.BLACK;
+        timerW.stop = turn != Turn.WHITE;
+        timerB.stop = turn != Turn.BLACK;
         isGameEnding = false;
     }
 
