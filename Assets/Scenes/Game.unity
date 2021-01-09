@@ -3111,6 +3111,7 @@ MonoBehaviour:
   ButtonMetal: {fileID: 1835261138}
   ButtonMarble: {fileID: 1590893905}
   panelTexture: {fileID: 1541265232}
+  ButtonOpciones: {fileID: 1351488816}
 --- !u!1 &1487065898
 GameObject:
   m_ObjectHideFlags: 0
@@ -3148,10 +3149,10 @@ RectTransform:
   m_Father: {fileID: 1751054423}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 360, y: 79}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -184.5, y: -82}
+  m_SizeDelta: {x: 1089, y: 322}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1487065900
 Animator:
@@ -3185,7 +3186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.0017869922, b: 0.6698113, a: 1}
+  m_Color: {r: 0.7311321, g: 0.7311321, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3246,10 +3247,10 @@ RectTransform:
   m_Father: {fileID: 1751054423}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 130, y: 81}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -414.5, y: -80}
+  m_SizeDelta: {x: 1089, y: 322}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1541265234
 Animator:
@@ -3283,7 +3284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.03545498, b: 0.6132076, a: 1}
+  m_Color: {r: 0.7311321, g: 0.7466438, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4302,7 +4303,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.06461814, b: 0.745283, a: 1}
+  m_Color: {r: 0.6933962, g: 0.71921545, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
