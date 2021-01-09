@@ -20,7 +20,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Textures.unity
     guid: f728e89f2cda6864db0c102e57ae85a4
-  - enabled: 1
-    path: Assets/Scenes/Desplegable.unity
-    guid: f7869966ea7c30d45b72715253fee595
   m_configObjects: {}
