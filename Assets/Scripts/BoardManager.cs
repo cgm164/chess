@@ -161,15 +161,15 @@ public class BoardManager : MonoBehaviour
     }
     public void StopGame()
     {
-        timerW.stop = false;
-        timerB.stop = false;
+        timerW.stop = true;
+        timerB.stop = true;
         isGameEnding = true;
     }
 
     public void ContinueGame()
     {
-        timerW.stop = true;
-        timerB.stop = true;
+        timerW.stop = turn == Turn.WHITE;
+        timerB.stop = turn == Turn.BLACK;
         isGameEnding = false;
     }
 
