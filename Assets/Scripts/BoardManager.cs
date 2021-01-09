@@ -23,6 +23,7 @@ public class BoardManager : MonoBehaviour
     public CountDown timerW;
     public CountDown timerB; 
     public GameObject camera;
+    public Material[] actualW;
 
     public GameObject islandW;
     public GameObject islandB;
@@ -80,6 +81,7 @@ public class BoardManager : MonoBehaviour
         iPiece.GetComponent<State>().color = color;
         iPiece.GetComponent<State>().player = player;
         iPiece.GetComponent<State>().points = points;
+        iPiece.GetComponent<State>().namePrefab = piece.name;
         addColor(iPiece, color);
 
         obj.GetComponent<State>().piece = iPiece;
@@ -253,6 +255,13 @@ public class BoardManager : MonoBehaviour
             iIslandB++;
         }
 
+        bool promotionQueen(GameObject cell, GameObject piece)
+        {
+            return piece.GetComponent<State>().namePrefab == "Pawn" && 
+                  (turn == Turn.WHITE && cell.name.Contains('8') ||
+                   turn == Turn.BLACK && cell.name.Contains('1')); 
+        }
+
         void movePiece(string o, string n)
         {
             if (cellSelect.GetComponent<State>().piece != null)
@@ -265,10 +274,22 @@ public class BoardManager : MonoBehaviour
             }
 
             pieceSelect.GetComponent<State>().Move(cellSelect, () =>
-            {
+            {   
+                if (promotionQueen(cellSelect, pieceSelect))
+                {
+                    GameObject obj = Instantiate(queen);
+                    obj.transform.position += new Vector3(pieceSelect.transform.position.x, cellSelect.GetComponent<Collider>().bounds.size.y, pieceSelect.transform.position.z);
+                    obj.GetComponent<MeshRenderer>().material = new Material(pieceSelect.GetComponent<MeshRenderer>().material);
+                    obj.GetComponent<State>().color = pieceSelect.GetComponent<State>().color;
+                    obj.GetComponent<State>().player = turn;
+                    obj.name = pieceSelect.name;
+                    Destroy(pieceSelect);
+                    pieceSelect = obj;
+                }
+
                 cellSelect.GetComponent<State>().piece = pieceSelect;
                 oldCell.GetComponent<State>().piece = null;
-                
+
                 int index = castlingsMoves.IndexOf(o + n);
 
                 chess.GetStatusGame((Chess.GameStatus st) =>

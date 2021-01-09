@@ -14,6 +14,7 @@ public class State : MonoBehaviour
 
     private bool isMoving = false;
     private BoardManager.EndToMove cb;
+    public string namePrefab;
     void Start()
     {
        
