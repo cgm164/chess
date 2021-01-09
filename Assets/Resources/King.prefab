@@ -133,3 +133,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   capturedPrefab: {fileID: 919132149155446097, guid: cb530c505f2141b4bb9353a39ba37f0d, type: 3}
+  scale: {x: 0.025, y: 0.025, z: 0.025}

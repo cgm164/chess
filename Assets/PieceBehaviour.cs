@@ -6,6 +6,7 @@ public class PieceBehaviour : MonoBehaviour
 {
 
     public GameObject capturedPrefab;
+    public Vector3 scale;
 
     public IEnumerator Capture()
     {
@@ -15,7 +16,8 @@ public class PieceBehaviour : MonoBehaviour
         meshRendererComponent.enabled = false;
 
         var capturedObject = Instantiate(capturedPrefab, gameObject.transform);
-        capturedObject.transform.localScale = new Vector3(0.025f, 0.025f, 0.025f);
+        capturedObject.transform.localScale = scale;
+
         foreach (var childRenderer in capturedObject.GetComponentsInChildren<MeshRenderer>()){
             childRenderer.material = meshRendererComponent.material;
         }
