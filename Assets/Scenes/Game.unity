@@ -1085,6 +1085,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CellWhiteT
       objectReference: {fileID: 0}
+    - target: {fileID: 227227959373804154, guid: a91c9a19ae5eb6646855befc5c72882d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2244460992403360457, guid: a91c9a19ae5eb6646855befc5c72882d, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -4339,6 +4343,10 @@ PrefabInstance:
     - target: {fileID: 227227959373804154, guid: a91c9a19ae5eb6646855befc5c72882d, type: 3}
       propertyPath: m_Name
       value: CellWhiteB
+      objectReference: {fileID: 0}
+    - target: {fileID: 227227959373804154, guid: a91c9a19ae5eb6646855befc5c72882d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2244460992403360457, guid: a91c9a19ae5eb6646855befc5c72882d, type: 3}
       propertyPath: m_RootOrder
