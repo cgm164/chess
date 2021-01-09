@@ -250,6 +250,8 @@ public class BoardManager : MonoBehaviour
                 }   
 
                 cellSelect.GetComponent<State>().piece = pieceSelect;
+
+                StartCoroutine(oldCell.GetComponent<State>().piece.GetComponent<PieceBehaviour>().Capture());
                 oldCell.GetComponent<State>().piece = null;
                 
                 int index = castlingsMoves.IndexOf(o + n);
