@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+
 public class Desplegable : MonoBehaviour
 {
     public GameObject ButtonReanudar;
@@ -14,8 +15,8 @@ public class Desplegable : MonoBehaviour
     public GameObject ButtonMetal;
     public GameObject ButtonMarble;
     public GameObject panelTexture;
+    public GameObject ButtonOpciones;
 
-    private bool activadoButton;
     private bool activadoButtonTexture;
 
     void Start()
@@ -29,8 +30,8 @@ public class Desplegable : MonoBehaviour
         ButtonMetal.SetActive(false);
         ButtonMarble.SetActive(false);
         panelTexture.SetActive(false);
-        activadoButton = false;
         activadoButtonTexture = false;
+        ButtonOpciones.SetActive(true);
     }
     // Update is called once per frame
     void Update()
@@ -40,30 +41,29 @@ public class Desplegable : MonoBehaviour
 
     public void OnClick()
     {
-        if (activadoButton == false)
-        {
-            ButtonReanudar.SetActive(true);
-            ButtonNueva.SetActive(true);
-            ButtonTexture.SetActive(true);
-            ButtonSalir.SetActive(true);
-            panelMenu.SetActive(true);
-            activadoButton = true;
-        }
-        else
-        {
-            ButtonReanudar.SetActive(false);
-            ButtonNueva.SetActive(false);
-            ButtonSalir.SetActive(false);
-            panelMenu.SetActive(false);
-            activadoButton = false;
-            ButtonWooden.SetActive(false);
-            ButtonMetal.SetActive(false);
-            ButtonMarble.SetActive(false);
-            panelTexture.SetActive(false);
-        }
+        ButtonReanudar.SetActive(true);
+        ButtonNueva.SetActive(true);
+        ButtonTexture.SetActive(true);
+        ButtonSalir.SetActive(true);
+        panelMenu.SetActive(true);
+        ButtonOpciones.SetActive(false);
+        
     }
 
-    public void OnClickTexture()
+    public void OnClickReanudar()
+    {
+        ButtonReanudar.SetActive(false);
+        ButtonNueva.SetActive(false);
+        ButtonSalir.SetActive(false);
+        panelMenu.SetActive(false);
+        ButtonWooden.SetActive(false);
+        ButtonMetal.SetActive(false);
+        ButtonMarble.SetActive(false);
+        panelTexture.SetActive(false);
+        ButtonOpciones.SetActive(true);
+    }
+
+        public void OnClickTexture()
     {
         if (activadoButtonTexture == false)
         {
