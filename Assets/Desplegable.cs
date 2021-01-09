@@ -3,20 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+
 public class Desplegable : MonoBehaviour
 {
     public GameObject ButtonReanudar;
     public GameObject ButtonNueva;
     public GameObject ButtonSalir;
     public GameObject ButtonTexture;
-    public GameObject panel;
+    public GameObject panelMenu;
     public GameObject ButtonWooden;
     public GameObject ButtonMetal;
     public GameObject ButtonMarble;
-    public GameObject ButtonReset;
     public GameObject panelTexture;
+    public GameObject ButtonOpciones;
 
-    private bool activadoButton;
+    private bool activadoButtonTexture;
 
     void Start()
     {
@@ -24,13 +25,13 @@ public class Desplegable : MonoBehaviour
         ButtonNueva.SetActive(false);
         ButtonSalir.SetActive(false);
         ButtonTexture.SetActive(false);
-        panel.SetActive(false);
+        panelMenu.SetActive(false);
         ButtonWooden.SetActive(false);
         ButtonMetal.SetActive(false);
         ButtonMarble.SetActive(false);
-        ButtonReset.SetActive(false);
         panelTexture.SetActive(false);
-        activadoButton = false;
+        activadoButtonTexture = false;
+        ButtonOpciones.SetActive(true);
     }
     // Update is called once per frame
     void Update()
@@ -40,37 +41,46 @@ public class Desplegable : MonoBehaviour
 
     public void OnClick()
     {
-        if (activadoButton == false)
+        ButtonReanudar.SetActive(true);
+        ButtonNueva.SetActive(true);
+        ButtonTexture.SetActive(true);
+        ButtonSalir.SetActive(true);
+        panelMenu.SetActive(true);
+        ButtonOpciones.SetActive(false);
+        
+    }
+
+    public void OnClickReanudar()
+    {
+        ButtonReanudar.SetActive(false);
+        ButtonNueva.SetActive(false);
+        ButtonSalir.SetActive(false);
+        panelMenu.SetActive(false);
+        ButtonWooden.SetActive(false);
+        ButtonMetal.SetActive(false);
+        ButtonMarble.SetActive(false);
+        panelTexture.SetActive(false);
+        ButtonOpciones.SetActive(true);
+    }
+
+        public void OnClickTexture()
+    {
+        if (activadoButtonTexture == false)
         {
-            ButtonReanudar.SetActive(true);
-            ButtonNueva.SetActive(true);
-            ButtonTexture.SetActive(true);
-            ButtonSalir.SetActive(true);
-            panel.SetActive(true);
-            activadoButton = true;
+            ButtonWooden.SetActive(true);
+            ButtonMetal.SetActive(true);
+            ButtonMarble.SetActive(true);
+            panelTexture.SetActive(true);
+            activadoButtonTexture = true;
         }
         else
         {
-            ButtonReanudar.SetActive(false);
-            ButtonNueva.SetActive(false);
-            ButtonSalir.SetActive(false);
-            panel.SetActive(false);
-            activadoButton = false;
             ButtonWooden.SetActive(false);
             ButtonMetal.SetActive(false);
             ButtonMarble.SetActive(false);
-            ButtonReset.SetActive(false);
             panelTexture.SetActive(false);
+            activadoButtonTexture = false;
         }
-    }
-
-    public void OnClickTexture()
-    {
-        ButtonWooden.SetActive(true);
-        ButtonMetal.SetActive(true);
-        ButtonMarble.SetActive(true);
-        ButtonReset.SetActive(true);
-        panelTexture.SetActive(true);
     }
 
     }
