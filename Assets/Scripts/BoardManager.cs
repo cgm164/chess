@@ -159,6 +159,20 @@ public class BoardManager : MonoBehaviour
         timerW.stop = false;
         isGameEnding = false;
     }
+    public void StopGame()
+    {
+        timerW.stop = false;
+        timerB.stop = false;
+        isGameEnding = true;
+    }
+
+    public void ContinueGame()
+    {
+        timerW.stop = true;
+        timerB.stop = true;
+        isGameEnding = false;
+    }
+
 
     private int CountPointsIsland(GameObject island)
     {
