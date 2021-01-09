@@ -3129,7 +3129,6 @@ GameObject:
   - component: {fileID: 1487065899}
   - component: {fileID: 1487065902}
   - component: {fileID: 1487065901}
-  - component: {fileID: 1487065900}
   m_Layer: 5
   m_Name: PanelMenu
   m_TagString: Untagged
@@ -3160,25 +3159,6 @@ RectTransform:
   m_AnchoredPosition: {x: -184.5, y: -82}
   m_SizeDelta: {x: 1089, y: 322}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!95 &1487065900
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1487065898}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 3ccba60b6a6f8544b88b3e9d1d8044db, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &1487065901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3228,7 +3208,6 @@ GameObject:
   - component: {fileID: 1541265233}
   - component: {fileID: 1541265236}
   - component: {fileID: 1541265235}
-  - component: {fileID: 1541265234}
   m_Layer: 5
   m_Name: PanelTexture
   m_TagString: Untagged
@@ -3258,25 +3237,6 @@ RectTransform:
   m_AnchoredPosition: {x: -414.5, y: -80}
   m_SizeDelta: {x: 1089, y: 322}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!95 &1541265234
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1541265232}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 3ccba60b6a6f8544b88b3e9d1d8044db, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &1541265235
 MonoBehaviour:
   m_ObjectHideFlags: 0
