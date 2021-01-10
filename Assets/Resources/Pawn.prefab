@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6193197740830619771}
   - component: {fileID: -5981781321534317122}
   - component: {fileID: 8513172090079134724}
+  - component: {fileID: -7396437084148336249}
   m_Layer: 0
   m_Name: Pawn
   m_TagString: Untagged
@@ -97,8 +98,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   piece: {fileID: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
+  player: 0
   speed: 15
   target: {fileID: 0}
+  points: 0
 --- !u!114 &8513172090079134724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113,5 +116,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   piece: {fileID: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
+  player: 0
   speed: 15
   target: {fileID: 0}
+  points: 0
+--- !u!114 &-7396437084148336249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5062860892135164791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79908a4536635264e8c2bed500ba1a61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  capturedPrefab: {fileID: 919132149155446097, guid: d8076e00c846ef9469cef2ee2c43b0a4, type: 3}
+  scale: {x: 1.3, y: 1.3, z: 1.3}

@@ -37,6 +37,11 @@ public class Menu : MonoBehaviour
         SceneManager.LoadScene("Credits", LoadSceneMode.Single);
     }
 
+    public void PulsarHome()
+    {
+        SceneManager.LoadScene("Menu", LoadSceneMode.Single);
+    }
+
     public void OnExit()
     {
         Application.Quit();
