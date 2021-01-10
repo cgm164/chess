@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4702760147311665170}
   - component: {fileID: 2334527560191904956}
   - component: {fileID: 5549170240484806303}
+  - component: {fileID: -6975725366351879145}
   m_Layer: 0
   m_Name: Rook
   m_TagString: Untagged
@@ -96,5 +97,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   piece: {fileID: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
-  speed: 15
+  player: 0
+  speed: 7.5
   target: {fileID: 0}
+  points: 0
+--- !u!114 &-6975725366351879145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649903474835902851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79908a4536635264e8c2bed500ba1a61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  capturedPrefab: {fileID: 919132149155446097, guid: a3236b10a7fba414cbb78b34383deb99, type: 3}
+  scale: {x: 1.5, y: 1.5, z: 1.5}

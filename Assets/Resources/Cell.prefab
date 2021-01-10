@@ -97,8 +97,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   piece: {fileID: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
-  speed: 0.1
+  player: 0
+  speed: 7.5
   target: {fileID: 0}
+  points: 0
 --- !u!65 &5961228173365414853
 BoxCollider:
   m_ObjectHideFlags: 0
