@@ -11,19 +11,17 @@ MonoImporter:
   - sharp: {instanceID: 0}
   - queen: {instanceID: 0}
   - king: {instanceID: 0}
+  - bordeXSup: {fileID: 5463008541491264480, guid: f1a1e8b0dd60645c78f3cbb5ea6248df, type: 3}
+  - bordeYDer: {fileID: 5309905191460380020, guid: 769e2f8642da246f9813e2534824fa52, type: 3}
+  - bordeXInf: {fileID: 6887124015079357697, guid: 776eede8b16ed4b8dadec42ce410bff1, type: 3}
+  - bordeYIzq: {fileID: 6209769667000738320, guid: 1d5cacea1ba1d4198a770ddbfc401e17, type: 3}
   - material_madera_clara: {fileID: 2100000, guid: c009181e785b244d59701813ffff60fc, type: 2}
   - material_madera_oscura: {fileID: 2100000, guid: 7f8aa77aad12a40d6808e4704b919e21, type: 2}
   - material_marmol_claro: {fileID: 2100000, guid: 26509f6aaeae24ed1ac7fd126a6a5b23, type: 2}
   - material_marmol_oscuro: {fileID: 2100000, guid: df1b30b85396c47afb6817ef6ee4e78d, type: 2}
-  - material_oro: {fileID: 2100000, guid: b4e3d0a0bee2c4f2f808c27e280d7d11, type: 2}
-  - material_plata: {fileID: 2100000, guid: bfe8c98892cc2456d953b959ea5fe64c, type: 2}
-  - material_negro: {fileID: 2100000, guid: be298149f4a8e49dc8d1a03b672c44e0, type: 2}
-  - material_blanco: {fileID: 2100000, guid: baa2d3c668e794c3abc28b2773342087, type: 2}
-  - timerW: {instanceID: 0}
-  - timerB: {instanceID: 0}
+  - material_oro: {fileID: 2100000, guid: 9f8a67675e9264569919c1b10518b994, type: 2}
+  - material_plata: {fileID: 2100000, guid: 95bc727c2232a490890be755caa746af, type: 2}
   - camera: {instanceID: 0}
-  - islandW: {instanceID: 0}
-  - islandB: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

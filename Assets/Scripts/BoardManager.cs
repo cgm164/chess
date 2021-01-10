@@ -14,17 +14,20 @@ public class BoardManager : MonoBehaviour
     public GameObject sharp;
     public GameObject queen;
     public GameObject king;
+    public GameObject bordeXSup;
+    public GameObject bordeYDer;
+    public GameObject bordeXInf;
+    public GameObject bordeYIzq;
     public Material material_madera_clara;
     public Material material_madera_oscura;
     public Material material_marmol_claro;
     public Material material_marmol_oscuro;
     public Material material_oro;
     public Material material_plata;
-    public Material material_negro;
-    public Material material_blanco;
     public CountDown timerW;
     public CountDown timerB; 
     public GameObject camera;
+    public Material[] actualW;
 
     public GameObject islandW;
     public GameObject islandB;
@@ -82,6 +85,7 @@ public class BoardManager : MonoBehaviour
         iPiece.GetComponent<State>().color = color;
         iPiece.GetComponent<State>().player = player;
         iPiece.GetComponent<State>().points = points;
+        iPiece.GetComponent<State>().namePrefab = piece.name;
         addColor(iPiece, color);
 
         obj.GetComponent<State>().piece = iPiece;
@@ -161,6 +165,20 @@ public class BoardManager : MonoBehaviour
         timerW.stop = false;
         isGameEnding = false;
     }
+    public void StopGame()
+    {
+        timerW.stop = true;
+        timerB.stop = true;
+        isGameEnding = true;
+    }
+
+    public void ContinueGame()
+    {
+        timerW.stop = turn != Turn.WHITE;
+        timerB.stop = turn != Turn.BLACK;
+        isGameEnding = false;
+    }
+
 
     private int CountPointsIsland(GameObject island)
     {
@@ -208,8 +226,9 @@ public class BoardManager : MonoBehaviour
 
         }
 
-        void AddIntoIslandW(GameObject piece)
+        void AddIntoIslandW(GameObject _piece)
         {
+            GameObject piece = Instantiate(_piece);
             int i = iIslandW % 8;
             int j = iIslandW / 8;
             GameObject cellIsland = Instantiate(islandW, islandW.transform.parent);
@@ -224,8 +243,9 @@ public class BoardManager : MonoBehaviour
             iIslandW++;
         }
 
-        void AddIntoIslandB(GameObject piece)
+        void AddIntoIslandB(GameObject _piece)
         {
+            GameObject piece = Instantiate(_piece);
             int i = iIslandB % 8;
             int j = iIslandB / 8;
             GameObject cellIsland = Instantiate(islandB, islandB.transform.parent);
@@ -239,21 +259,41 @@ public class BoardManager : MonoBehaviour
             iIslandB++;
         }
 
+        bool promotionQueen(GameObject cell, GameObject piece)
+        {
+            return piece.GetComponent<State>().namePrefab == "Pawn" && 
+                  (turn == Turn.WHITE && cell.name.Contains('8') ||
+                   turn == Turn.BLACK && cell.name.Contains('1')); 
+        }
+
         void movePiece(string o, string n)
         {
-            pieceSelect.GetComponent<State>().Move(cellSelect, () =>
+            if (cellSelect.GetComponent<State>().piece != null)
             {
-                if (cellSelect.GetComponent<State>().piece != null)
+                if (turn == Turn.WHITE)
+                   AddIntoIslandB(cellSelect.GetComponent<State>().piece);
+                else
+                    AddIntoIslandW(cellSelect.GetComponent<State>().piece);
+                StartCoroutine(cellSelect.GetComponent<State>().piece.GetComponent<PieceBehaviour>().Capture());
+            }
+
+            pieceSelect.GetComponent<State>().Move(cellSelect, () =>
+            {   
+                if (promotionQueen(cellSelect, pieceSelect))
                 {
-                    if (turn == Turn.WHITE)
-                        AddIntoIslandB(cellSelect.GetComponent<State>().piece);
-                    else
-                        AddIntoIslandW(cellSelect.GetComponent<State>().piece);
-                }   
+                    GameObject obj = Instantiate(queen);
+                    obj.transform.position += new Vector3(pieceSelect.transform.position.x, cellSelect.GetComponent<Collider>().bounds.size.y, pieceSelect.transform.position.z);
+                    obj.GetComponent<MeshRenderer>().material = new Material(pieceSelect.GetComponent<MeshRenderer>().material);
+                    obj.GetComponent<State>().color = pieceSelect.GetComponent<State>().color;
+                    obj.GetComponent<State>().player = turn;
+                    obj.name = pieceSelect.name;
+                    Destroy(pieceSelect);
+                    pieceSelect = obj;
+                }
 
                 cellSelect.GetComponent<State>().piece = pieceSelect;
                 oldCell.GetComponent<State>().piece = null;
-                
+
                 int index = castlingsMoves.IndexOf(o + n);
 
                 chess.GetStatusGame((Chess.GameStatus st) =>
@@ -420,12 +460,6 @@ public class BoardManager : MonoBehaviour
 
         }
     }
-    private void ChangePieceMaterial(){
-        
-    }
-    private void ChangeCellMaterial(){
-
-    }
     private void addMaterial(GameObject obj, Material m)
     {
         obj.GetComponent<MeshRenderer>().material = m;
@@ -441,12 +475,9 @@ public class BoardManager : MonoBehaviour
         ChangeMaterial(material_marmol_oscuro, material_marmol_claro);
     }
     public void ChangeMaterialGS(){
-        ChangeMaterial(material_oro, material_plata);
+        ChangeMaterial(material_plata, material_oro);
     }
-     public void ResetColour(){
-        ChangeMaterial(material_negro, material_blanco);
-    }
-    
+
     private void ChangeMaterial(Material m1, Material m2) 
     {
         GameObject[] objects = SceneManager.GetActiveScene().GetRootGameObjects().Where(c => c.name.Contains("piece")).ToArray();
@@ -455,6 +486,33 @@ public class BoardManager : MonoBehaviour
 
         foreach (GameObject piece in objects)
             addMaterial(piece, piece.name.Contains("black")? m1 : m2);
+    }
+    public void GenerateBorders(){
+        GameObject go;
+        float size=0;
+
+        //Borde Inferior
+        size = bordeXInf.GetComponent<Collider>().bounds.size.x;
+        go = Instantiate(bordeXInf);
+        go.transform.position += new Vector3(size, 0, size);
+
+        //Borde Izquierdo
+        size = bordeYIzq.GetComponent<Collider>().bounds.size.x;
+        go = Instantiate(bordeYIzq);
+        go.transform.position += new Vector3(size, 0, size);
+
+        //BordeSuperior
+        size = bordeXSup.GetComponent<Collider>().bounds.size.x;
+        go = Instantiate(bordeXSup);
+        go.transform.position += new Vector3(size, 0, size);
+
+        //Borde Derecho
+        size = bordeYDer.GetComponent<Collider>().bounds.size.x;
+        go = Instantiate(bordeYDer);
+        go.transform.position += new Vector3(size, 0, size);
 
     }
+
+  
 }
+
