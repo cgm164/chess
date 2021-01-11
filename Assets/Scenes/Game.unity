@@ -379,7 +379,7 @@ GameObject:
   - component: {fileID: 183413623}
   - component: {fileID: 183413622}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: MarbleButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -646,7 +646,7 @@ GameObject:
   - component: {fileID: 292898516}
   - component: {fileID: 292898515}
   m_Layer: 5
-  m_Name: ButtonTexture
+  m_Name: GSButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1840,7 +1840,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2244460992403360457, guid: a91c9a19ae5eb6646855befc5c72882d, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2244460992403360457, guid: a91c9a19ae5eb6646855befc5c72882d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3035,14 +3035,18 @@ MonoBehaviour:
   sharp: {fileID: 7968039949776864307, guid: 665f181c04335db41b7394f6beca5a06, type: 3}
   queen: {fileID: 685649585958538712, guid: 09cb4548f569249428fa8ac6be8502ea, type: 3}
   king: {fileID: 3560818936109126895, guid: 6e5bdd799506ebf40a24f66d80c0b395, type: 3}
+  bordeXSup: {fileID: 5463008541491264480, guid: f1a1e8b0dd60645c78f3cbb5ea6248df, type: 3}
+  bordeYDer: {fileID: 5309905191460380020, guid: 769e2f8642da246f9813e2534824fa52, type: 3}
+  bordeXInf: {fileID: 6887124015079357697, guid: 776eede8b16ed4b8dadec42ce410bff1, type: 3}
+  bordeYIzq: {fileID: 6209769667000738320, guid: 1d5cacea1ba1d4198a770ddbfc401e17, type: 3}
   material_madera_clara: {fileID: 2100000, guid: c009181e785b244d59701813ffff60fc, type: 2}
   material_madera_oscura: {fileID: 2100000, guid: 7f8aa77aad12a40d6808e4704b919e21, type: 2}
   material_marmol_claro: {fileID: 2100000, guid: 26509f6aaeae24ed1ac7fd126a6a5b23, type: 2}
   material_marmol_oscuro: {fileID: 2100000, guid: df1b30b85396c47afb6817ef6ee4e78d, type: 2}
-  material_oro: {fileID: 2100000, guid: b4e3d0a0bee2c4f2f808c27e280d7d11, type: 2}
-  material_plata: {fileID: 2100000, guid: bfe8c98892cc2456d953b959ea5fe64c, type: 2}
-  timerW: {fileID: 1429804285}
-  timerB: {fileID: 1429804284}
+  material_oro: {fileID: 2100000, guid: 9f8a67675e9264569919c1b10518b994, type: 2}
+  material_plata: {fileID: 2100000, guid: 95bc727c2232a490890be755caa746af, type: 2}
+  timerW: {fileID: 0}
+  timerB: {fileID: 0}
   camera: {fileID: 963194225}
   actualW: []
   islandW: {fileID: 1308350455}
@@ -3050,7 +3054,7 @@ MonoBehaviour:
   time: 1800
   black: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 0}
   white: {r: 1, g: 1, b: 1, a: 0}
-  typeGame: 0
+  typeGame: 1
 --- !u!4 &1429804283
 Transform:
   m_ObjectHideFlags: 0
@@ -3063,7 +3067,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1429804284
 MonoBehaviour:
@@ -4108,7 +4112,7 @@ GameObject:
   - component: {fileID: 1835261141}
   - component: {fileID: 1835261140}
   m_Layer: 5
-  m_Name: ButtonMetal
+  m_Name: WoodenButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

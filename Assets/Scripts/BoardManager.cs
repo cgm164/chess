@@ -154,8 +154,8 @@ public class BoardManager : MonoBehaviour
         typeGame = PlayerPrefs.GetInt("modoJuego") == 0 ? TypeGame.HUMAN : TypeGame.IA;
         isGameEnding = true;
         islandB.GetComponent<MeshRenderer>().material.color = Color.white;
-        timerW.startTimer(time);
-        timerB.startTimer(time);
+        //timerW.startTimer(time);
+        //timerB.startTimer(time);
     }
 
     public delegate void EndToMove();
@@ -163,13 +163,13 @@ public class BoardManager : MonoBehaviour
 
     public void StartGame()
     {
-        timerW.stop = false;
+        //timerW.stop = false;
         isGameEnding = false;
     }
     public void StopGame()
     {
-        timerW.stop = true;
-        timerB.stop = true;
+       // timerW.stop = true;
+        //timerB.stop = true;
         isGameEnding = true;
     }
 
@@ -312,8 +312,8 @@ public class BoardManager : MonoBehaviour
                         }
                         else
                         {
-                            timerW.stop = turn == Turn.WHITE;
-                            timerB.stop = turn == Turn.BLACK;
+                            //timerW.stop = turn == Turn.WHITE;
+                            //timerB.stop = turn == Turn.BLACK;
                             turn = turn == Turn.WHITE ? Turn.BLACK : Turn.WHITE;
                         }
                             
@@ -413,7 +413,7 @@ public class BoardManager : MonoBehaviour
         if (isGameEnding)
             return;
 
-        CheckTimeout();
+        //CheckTimeout();
 
         if (IsHumanVSIA() && IsTurnIA())
         {
