@@ -149,8 +149,18 @@ public class BoardManager : MonoBehaviour
         typeGame = PlayerPrefs.GetInt("modoJuego") == 0 ? TypeGame.HUMAN : TypeGame.IA;
         isGameEnding = true;
         islandB.GetComponent<MeshRenderer>().material.color = Color.white;
+        time = PlayerPrefs.GetInt("tiempo");
         timerW.startTimer(time);
         timerB.startTimer(time);
+        int texture = PlayerPrefs.GetInt("textura");
+        Debug.Log(texture);
+        if (texture == 1)
+            ChangeMaterialWood();
+        else if (texture == 2)
+            ChangeMaterialGS();
+        else
+            ChangeMaterialMarble();
+        
     }
 
     public delegate void EndToMove();
