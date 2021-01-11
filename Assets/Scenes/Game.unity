@@ -3045,6 +3045,8 @@ MonoBehaviour:
   material_marmol_oscuro: {fileID: 2100000, guid: df1b30b85396c47afb6817ef6ee4e78d, type: 2}
   material_oro: {fileID: 2100000, guid: 9f8a67675e9264569919c1b10518b994, type: 2}
   material_plata: {fileID: 2100000, guid: 95bc727c2232a490890be755caa746af, type: 2}
+  timerW: {fileID: 0}
+  timerB: {fileID: 0}
   camera: {fileID: 963194225}
   actualW: []
   islandW: {fileID: 1308350455}
@@ -3065,7 +3067,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1429804284
 MonoBehaviour:
