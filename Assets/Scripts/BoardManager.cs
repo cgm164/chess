@@ -158,7 +158,7 @@ public class BoardManager : MonoBehaviour
         timerW.startTimer(time);
         timerB.startTimer(time);
         int texture = PlayerPrefs.GetInt("textura");
-        Debug.Log(texture);
+        
         if (texture == 1)
             ChangeMaterialWood();
         else if (texture == 2)
@@ -173,14 +173,14 @@ public class BoardManager : MonoBehaviour
 
     public void StartGame()
     {
-        //timerW.stop = false;
+        timerW.stop = false;
         isGameEnding = false;
     }
     public void StopGame()
     {
-       // timerW.stop = true;
-        //timerB.stop = true;
-        isGameEnding = true;
+       timerW.stop = true;
+       timerB.stop = true;
+       isGameEnding = true;
     }
 
     public void ContinueGame()
