@@ -14,6 +14,10 @@ public class BoardManager : MonoBehaviour
     public GameObject sharp;
     public GameObject queen;
     public GameObject king;
+    public GameObject bordeXSup;
+    public GameObject bordeYDer;
+    public GameObject bordeXInf;
+    public GameObject bordeYIzq;
     public Material material_madera_clara;
     public Material material_madera_oscura;
     public Material material_marmol_claro;
@@ -95,6 +99,7 @@ public class BoardManager : MonoBehaviour
 
     private void GenerateBoard()
     {
+        GenerateBorders();
         float size = cell.GetComponent<Collider>().bounds.size.x;
         float height = cell.GetComponent<Collider>().bounds.size.y;
 
@@ -456,12 +461,6 @@ public class BoardManager : MonoBehaviour
 
         }
     }
-    private void ChangePieceMaterial(){
-        
-    }
-    private void ChangeCellMaterial(){
-
-    }
     private void addMaterial(GameObject obj, Material m)
     {
         obj.GetComponent<MeshRenderer>().material = m;
@@ -477,9 +476,9 @@ public class BoardManager : MonoBehaviour
         ChangeMaterial(material_marmol_oscuro, material_marmol_claro);
     }
     public void ChangeMaterialGS(){
-        ChangeMaterial(material_oro, material_plata);
+        ChangeMaterial(material_plata, material_oro);
     }
-    
+
     private void ChangeMaterial(Material m1, Material m2) 
     {
         GameObject[] objects = SceneManager.GetActiveScene().GetRootGameObjects().Where(c => c.name.Contains("piece")).ToArray();
@@ -488,6 +487,33 @@ public class BoardManager : MonoBehaviour
 
         foreach (GameObject piece in objects)
             addMaterial(piece, piece.name.Contains("black")? m1 : m2);
+    }
+    public void GenerateBorders(){
+        GameObject go;
+        float size=0;
+
+        //Borde Inferior
+        size = bordeXInf.GetComponent<Collider>().bounds.size.x;
+        go = Instantiate(bordeXInf);
+        go.transform.position += new Vector3(size, 0, size);
+
+        //Borde Izquierdo
+        size = bordeYIzq.GetComponent<Collider>().bounds.size.x;
+        go = Instantiate(bordeYIzq);
+        go.transform.position += new Vector3(size, 0, size);
+
+        //BordeSuperior
+        size = bordeXSup.GetComponent<Collider>().bounds.size.x;
+        go = Instantiate(bordeXSup);
+        go.transform.position += new Vector3(size, 0, size);
+
+        //Borde Derecho
+        size = bordeYDer.GetComponent<Collider>().bounds.size.x;
+        go = Instantiate(bordeYDer);
+        go.transform.position += new Vector3(size, 0, size);
 
     }
+
+  
 }
+
