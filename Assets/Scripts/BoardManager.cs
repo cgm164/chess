@@ -164,8 +164,7 @@ public class BoardManager : MonoBehaviour
         else if (texture == 2)
             ChangeMaterialGS();
         else
-            ChangeMaterialMarble();
-        
+            ChangeMaterialMarble();        
     }
 
     public delegate void EndToMove();
