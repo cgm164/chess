@@ -379,7 +379,7 @@ GameObject:
   - component: {fileID: 183413623}
   - component: {fileID: 183413622}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: MarbleButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -646,7 +646,7 @@ GameObject:
   - component: {fileID: 292898516}
   - component: {fileID: 292898515}
   m_Layer: 5
-  m_Name: ButtonTexture
+  m_Name: GSButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1084,6 +1084,10 @@ PrefabInstance:
     - target: {fileID: 227227959373804154, guid: a91c9a19ae5eb6646855befc5c72882d, type: 3}
       propertyPath: m_Name
       value: CellWhiteT
+      objectReference: {fileID: 0}
+    - target: {fileID: 227227959373804154, guid: a91c9a19ae5eb6646855befc5c72882d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2244460992403360457, guid: a91c9a19ae5eb6646855befc5c72882d, type: 3}
       propertyPath: m_RootOrder
@@ -1836,7 +1840,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2244460992403360457, guid: a91c9a19ae5eb6646855befc5c72882d, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2244460992403360457, guid: a91c9a19ae5eb6646855befc5c72882d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2232,7 +2236,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1086387761}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -10.000041}
   m_LocalScale: {x: 5, y: 1.6666665, z: 1}
   m_Children:
   - {fileID: 1101568698}
@@ -2241,7 +2245,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 16.000061, y: -39}
+  m_AnchoredPosition: {x: 16.000061, y: -78}
   m_SizeDelta: {x: 160, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1086387763
@@ -2662,7 +2666,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Restart
+  m_text: Resume
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3031,14 +3035,18 @@ MonoBehaviour:
   sharp: {fileID: 7968039949776864307, guid: 665f181c04335db41b7394f6beca5a06, type: 3}
   queen: {fileID: 685649585958538712, guid: 09cb4548f569249428fa8ac6be8502ea, type: 3}
   king: {fileID: 3560818936109126895, guid: 6e5bdd799506ebf40a24f66d80c0b395, type: 3}
+  bordeXSup: {fileID: 5463008541491264480, guid: f1a1e8b0dd60645c78f3cbb5ea6248df, type: 3}
+  bordeYDer: {fileID: 5309905191460380020, guid: 769e2f8642da246f9813e2534824fa52, type: 3}
+  bordeXInf: {fileID: 6887124015079357697, guid: 776eede8b16ed4b8dadec42ce410bff1, type: 3}
+  bordeYIzq: {fileID: 6209769667000738320, guid: 1d5cacea1ba1d4198a770ddbfc401e17, type: 3}
   material_madera_clara: {fileID: 2100000, guid: c009181e785b244d59701813ffff60fc, type: 2}
   material_madera_oscura: {fileID: 2100000, guid: 7f8aa77aad12a40d6808e4704b919e21, type: 2}
   material_marmol_claro: {fileID: 2100000, guid: 26509f6aaeae24ed1ac7fd126a6a5b23, type: 2}
   material_marmol_oscuro: {fileID: 2100000, guid: df1b30b85396c47afb6817ef6ee4e78d, type: 2}
-  material_oro: {fileID: 2100000, guid: b4e3d0a0bee2c4f2f808c27e280d7d11, type: 2}
-  material_plata: {fileID: 2100000, guid: bfe8c98892cc2456d953b959ea5fe64c, type: 2}
-  timerW: {fileID: 1429804285}
-  timerB: {fileID: 1429804284}
+  material_oro: {fileID: 2100000, guid: 9f8a67675e9264569919c1b10518b994, type: 2}
+  material_plata: {fileID: 2100000, guid: 95bc727c2232a490890be755caa746af, type: 2}
+  timerW: {fileID: 1429804284}
+  timerB: {fileID: 1429804285}
   camera: {fileID: 963194225}
   actualW: []
   islandW: {fileID: 1308350455}
@@ -3046,7 +3054,7 @@ MonoBehaviour:
   time: 1800
   black: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 0}
   white: {r: 1, g: 1, b: 1, a: 0}
-  typeGame: 0
+  typeGame: 1
 --- !u!4 &1429804283
 Transform:
   m_ObjectHideFlags: 0
@@ -3059,7 +3067,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1429804284
 MonoBehaviour:
@@ -3113,6 +3121,7 @@ MonoBehaviour:
   ButtonMarble: {fileID: 1590893905}
   panelTexture: {fileID: 1541265232}
   ButtonOpciones: {fileID: 1351488816}
+  ButtonStart: {fileID: 1750424771}
 --- !u!1 &1487065898
 GameObject:
   m_ObjectHideFlags: 0
@@ -3124,7 +3133,6 @@ GameObject:
   - component: {fileID: 1487065899}
   - component: {fileID: 1487065902}
   - component: {fileID: 1487065901}
-  - component: {fileID: 1487065900}
   m_Layer: 5
   m_Name: PanelMenu
   m_TagString: Untagged
@@ -3155,25 +3163,6 @@ RectTransform:
   m_AnchoredPosition: {x: -184.5, y: -82}
   m_SizeDelta: {x: 1089, y: 322}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!95 &1487065900
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1487065898}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 3ccba60b6a6f8544b88b3e9d1d8044db, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &1487065901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3223,7 +3212,6 @@ GameObject:
   - component: {fileID: 1541265233}
   - component: {fileID: 1541265236}
   - component: {fileID: 1541265235}
-  - component: {fileID: 1541265234}
   m_Layer: 5
   m_Name: PanelTexture
   m_TagString: Untagged
@@ -3239,7 +3227,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1541265232}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 36}
+  m_LocalPosition: {x: 0, y: 0, z: 45.3}
   m_LocalScale: {x: 0.19999999, y: 0.6, z: 1}
   m_Children:
   - {fileID: 1590893906}
@@ -3250,28 +3238,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -414.5, y: -80}
-  m_SizeDelta: {x: 1089, y: 322}
+  m_AnchoredPosition: {x: -414.5, y: -59.2}
+  m_SizeDelta: {x: 1089, y: 272.92212}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!95 &1541265234
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1541265232}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 3ccba60b6a6f8544b88b3e9d1d8044db, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &1541265235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3337,7 +3306,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1590893905}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -10.000041}
   m_LocalScale: {x: 5, y: 1.6666665, z: 1}
   m_Children:
   - {fileID: 692210171}
@@ -3346,7 +3315,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 16, y: 95}
+  m_AnchoredPosition: {x: 16, y: 55.999996}
   m_SizeDelta: {x: 160, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1590893907
@@ -3908,16 +3877,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1750424771}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -16}
+  m_LocalPosition: {x: 0, y: 0, z: -134}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1283313109}
   m_Father: {fileID: 1751054423}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -444, y: 20}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: -60}
   m_SizeDelta: {x: 160, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1750424773
@@ -3966,6 +3935,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1429804282}
         m_TargetAssemblyTypeName: BoardManager, Assembly-CSharp
         m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1429804286}
+        m_TargetAssemblyTypeName: Desplegable, Assembly-CSharp
+        m_MethodName: OnClickStart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4131,7 +4112,7 @@ GameObject:
   - component: {fileID: 1835261141}
   - component: {fileID: 1835261140}
   m_Layer: 5
-  m_Name: ButtonMetal
+  m_Name: WoodenButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4145,7 +4126,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1835261138}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 5, y: 1.6666665, z: 1}
   m_Children:
   - {fileID: 1734836456}
@@ -4154,7 +4135,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 16, y: 30}
+  m_AnchoredPosition: {x: 16, y: -9}
   m_SizeDelta: {x: 160, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1835261140
@@ -4339,6 +4320,10 @@ PrefabInstance:
     - target: {fileID: 227227959373804154, guid: a91c9a19ae5eb6646855befc5c72882d, type: 3}
       propertyPath: m_Name
       value: CellWhiteB
+      objectReference: {fileID: 0}
+    - target: {fileID: 227227959373804154, guid: a91c9a19ae5eb6646855befc5c72882d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2244460992403360457, guid: a91c9a19ae5eb6646855befc5c72882d, type: 3}
       propertyPath: m_RootOrder

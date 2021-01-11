@@ -16,6 +16,7 @@ public class Desplegable : MonoBehaviour
     public GameObject ButtonMarble;
     public GameObject panelTexture;
     public GameObject ButtonOpciones;
+    public GameObject ButtonStart;
 
     private bool activadoButtonTexture;
 
@@ -32,6 +33,7 @@ public class Desplegable : MonoBehaviour
         panelTexture.SetActive(false);
         activadoButtonTexture = false;
         ButtonOpciones.SetActive(true);
+        ButtonStart.SetActive(true);
     }
     // Update is called once per frame
     void Update()
@@ -63,7 +65,7 @@ public class Desplegable : MonoBehaviour
         ButtonOpciones.SetActive(true);
     }
 
-        public void OnClickTexture()
+    public void OnClickTexture()
     {
         if (activadoButtonTexture == false)
         {
@@ -81,6 +83,11 @@ public class Desplegable : MonoBehaviour
             panelTexture.SetActive(false);
             activadoButtonTexture = false;
         }
+    }
+
+    public void OnClickStart()
+    {
+        ButtonStart.SetActive(false);
     }
 
     }
