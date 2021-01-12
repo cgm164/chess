@@ -21,7 +21,14 @@ MonoImporter:
   - material_marmol_oscuro: {fileID: 2100000, guid: df1b30b85396c47afb6817ef6ee4e78d, type: 2}
   - material_oro: {fileID: 2100000, guid: 9f8a67675e9264569919c1b10518b994, type: 2}
   - material_plata: {fileID: 2100000, guid: 95bc727c2232a490890be755caa746af, type: 2}
+  - borde_madera: {fileID: 2100000, guid: c4528a740d5274224b841a6b8d7bb6c8, type: 2}
+  - borde_marmol: {fileID: 2100000, guid: 658383a68e01146c5a49e4dc8d8143be, type: 2}
+  - borde_metalico: {fileID: 2100000, guid: 95684b8c6e2394e83b38cec4d06be0dc, type: 2}
+  - timerW: {instanceID: 0}
+  - timerB: {instanceID: 0}
   - camera: {instanceID: 0}
+  - islandW: {instanceID: 0}
+  - islandB: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
