@@ -24,6 +24,9 @@ public class BoardManager : MonoBehaviour
     public Material material_marmol_oscuro;
     public Material material_oro;
     public Material material_plata;
+    public Material borde_madera;
+    public Material borde_marmol;
+    public Material borde_metalico;
     public CountDown timerW;
     public CountDown timerB; 
     public GameObject camera;
@@ -479,13 +482,16 @@ public class BoardManager : MonoBehaviour
     public void ChangeMaterialWood()
     {
         ChangeMaterial(material_madera_oscura, material_madera_clara);
+    
     }
 
     public void ChangeMaterialMarble(){
         ChangeMaterial(material_marmol_oscuro, material_marmol_claro);
+        
     }
     public void ChangeMaterialGS(){
         ChangeMaterial(material_plata, material_oro);
+       
     }
 
     private void ChangeMaterial(Material m1, Material m2) 
@@ -493,9 +499,24 @@ public class BoardManager : MonoBehaviour
         GameObject[] objects = SceneManager.GetActiveScene().GetRootGameObjects().Where(c => c.name.Contains("piece")).ToArray();
         black = m1.color;
         white = m2.color;
+        Material borderMaterial;
 
         foreach (GameObject piece in objects)
             addMaterial(piece, piece.name.Contains("black")? m1 : m2);
+        if(m1.name.Contains("madera")){
+            borderMaterial=borde_madera;
+        }
+        else if(m1.name.Contains("marmol")){
+            borderMaterial=borde_marmol;
+        }
+        else{
+            borderMaterial=borde_metalico;
+        }
+        GameObject[] borders = SceneManager.GetActiveScene().GetRootGameObjects().Where(c => c.name.Contains("Borde")).ToArray();
+        foreach (GameObject border in borders)
+            addMaterial(border, borderMaterial);
+
+        
     }
     public void GenerateBorders(){
         GameObject go;
