@@ -28,6 +28,7 @@ public class BoardManager : MonoBehaviour
     public CountDown timerB; 
     public GameObject camera;
     public Material[] actualW;
+    public AudioSource soundBreak;
 
     public GameObject islandW;
     public GameObject islandB;
@@ -284,6 +285,7 @@ public class BoardManager : MonoBehaviour
                    AddIntoIslandB(cellSelect.GetComponent<State>().piece);
                 else
                     AddIntoIslandW(cellSelect.GetComponent<State>().piece);
+                soundBreak.Play();
                 StartCoroutine(cellSelect.GetComponent<State>().piece.GetComponent<PieceBehaviour>().Capture());
             }
 
