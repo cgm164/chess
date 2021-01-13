@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a3236b10a7fba414cbb78b34383deb99
+guid: 3bdcbcdb6248df5428490bca2d8e8a56
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable:
@@ -39,7 +39,7 @@ ModelImporter:
       takeName: Scene
       internalID: 0
       firstFrame: 1
-      lastFrame: 250
+      lastFrame: 100
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

@@ -81,7 +81,7 @@ public class BoardManager : MonoBehaviour
         float z = obj.transform.position.z;
 
         iPiece.transform.position += new Vector3(x, y + height, z);
-        iPiece.transform.rotation  = Quaternion.Euler(piece.transform.rotation.eulerAngles.x, piece.transform.eulerAngles.y + rotation, piece.transform.rotation.eulerAngles.z);
+        iPiece.transform.rotation  = Quaternion.Euler(piece.transform.rotation.eulerAngles.x, piece.transform.eulerAngles.y + rotation + 180f, piece.transform.rotation.eulerAngles.z);
         iPiece.GetComponent<State>().color = color;
         iPiece.GetComponent<State>().player = player;
         iPiece.GetComponent<State>().points = points;
