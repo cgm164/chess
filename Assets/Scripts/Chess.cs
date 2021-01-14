@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class Chess : MonoBehaviour
 {
     private string status = "";
+    public AudioSource wrongMovement;
 
     public Chess() { }
     
