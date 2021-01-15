@@ -27,10 +27,18 @@ public class BoardManager : MonoBehaviour
     public Material borde_madera;
     public Material borde_marmol;
     public Material borde_metalico;
-    public CountDown timerW;
-    public CountDown timerB; 
+    public ClockUI timerW;
+    public ClockUI timerB; 
     public GameObject camera;
     public Material[] actualW;
+    public AudioSource breakMarble;
+    public AudioSource breakMetal;
+    public AudioSource breakWood;
+    public AudioSource movement;
+    public AudioSource end;
+    public AudioSource promotion;
+    public string mat = "wooden";
+
 
     public GameObject islandW;
     public GameObject islandB;
@@ -167,16 +175,18 @@ public class BoardManager : MonoBehaviour
         else if (texture == 2)
             ChangeMaterialGS();
         else
-            ChangeMaterialMarble();        
+            ChangeMaterialMarble();
     }
 
     public delegate void EndToMove();
     public delegate void EndToMoveStatus(bool a);
 
+    private bool isStartGame = false;
     public void StartGame()
     {
         timerW.stop = false;
         isGameEnding = false;
+        isStartGame = true;
     }
     public void StopGame()
     {
@@ -187,6 +197,7 @@ public class BoardManager : MonoBehaviour
 
     public void ContinueGame()
     {
+        if (!isStartGame) return;
         timerW.stop = turn != Turn.WHITE;
         timerB.stop = turn != Turn.BLACK;
         isGameEnding = false;
@@ -209,11 +220,15 @@ public class BoardManager : MonoBehaviour
 
     private void CheckTimeout()
     {
-        float timeB = timerB.timeLeft;
-        float timeW = timerW.timeLeft;
+        float timeB = timerB.day;
+        float timeW = timerW.day;
 
         if ((timeB < 0 || timeW < 0) && !isGameEnding)
         {
+            timerB.stop = true;
+            timerW.stop = true;
+            timerB.day = 0;
+            timerW.day = 0;
             //int whitePoints = CountPointsIsland(islandW);
             //int blackPoints = CountPointsIsland(islandB);
             isGameEnding = true;
@@ -281,12 +296,27 @@ public class BoardManager : MonoBehaviour
 
         void movePiece(string o, string n)
         {
+            movement.Play();
             if (cellSelect.GetComponent<State>().piece != null)
             {
                 if (turn == Turn.WHITE)
                    AddIntoIslandB(cellSelect.GetComponent<State>().piece);
                 else
                     AddIntoIslandW(cellSelect.GetComponent<State>().piece);
+
+                switch (mat)
+                {
+                    case "wooden":
+                        breakWood.Play();
+                        break;
+                    case "metal":
+                        breakMetal.Play();
+                        break;
+                    default:
+                        breakMarble.Play();
+                        break;
+                }
+                
                 StartCoroutine(cellSelect.GetComponent<State>().piece.GetComponent<PieceBehaviour>().Capture());
             }
 
@@ -294,6 +324,7 @@ public class BoardManager : MonoBehaviour
             {   
                 if (promotionQueen(cellSelect, pieceSelect))
                 {
+                    promotion.Play();
                     GameObject obj = Instantiate(queen);
                     obj.transform.position += new Vector3(pieceSelect.transform.position.x, cellSelect.GetComponent<Collider>().bounds.size.y, pieceSelect.transform.position.z);
                     obj.GetComponent<MeshRenderer>().material = new Material(pieceSelect.GetComponent<MeshRenderer>().material);
@@ -324,14 +355,17 @@ public class BoardManager : MonoBehaviour
                         }
                         else
                         {
-                            //timerW.stop = turn == Turn.WHITE;
-                            //timerB.stop = turn == Turn.BLACK;
+                            timerW.stop = turn == Turn.WHITE;
+                            timerB.stop = turn == Turn.BLACK;
                             turn = turn == Turn.WHITE ? Turn.BLACK : Turn.WHITE;
                         }
                             
                         return;
                     }
+                    else end.Play();
                     Debug.Log("GAME OVER");
+                    timerB.stop = true;
+                    timerW.stop = true;
                 });
             });
         }
@@ -494,24 +528,40 @@ public class BoardManager : MonoBehaviour
        
     }
 
+    public void ChangeMaterialIsland(GameObject island, Material m1, Material m2)
+    {
+        foreach(Transform p in island.transform)
+            if (p.name.Contains("piece"))
+                addMaterial(p.gameObject, p.gameObject.name.Contains("black") ? m1 : m2);
+
+    }
+
     private void ChangeMaterial(Material m1, Material m2) 
     {
         GameObject[] objects = SceneManager.GetActiveScene().GetRootGameObjects().Where(c => c.name.Contains("piece")).ToArray();
+
         black = m1.color;
         white = m2.color;
         Material borderMaterial;
 
         foreach (GameObject piece in objects)
-            addMaterial(piece, piece.name.Contains("black")? m1 : m2);
-        if(m1.name.Contains("madera")){
+            addMaterial(piece, piece.name.Contains("black") ? m1 : m2);
+        ChangeMaterialIsland(islandW.transform.parent.gameObject, m1, m2);
+        ChangeMaterialIsland(islandB.transform.parent.gameObject, m1, m2);
+
+        if (m1.name.Contains("madera")){
+            mat = "wooden";
             borderMaterial=borde_madera;
         }
         else if(m1.name.Contains("marmol")){
-            borderMaterial=borde_marmol;
+            mat = "marble";
+            borderMaterial =borde_marmol;
         }
         else{
-            borderMaterial=borde_metalico;
+            mat = "metal";
+            borderMaterial =borde_metalico;
         }
+
         GameObject[] borders = SceneManager.GetActiveScene().GetRootGameObjects().Where(c => c.name.Contains("Borde")).ToArray();
         foreach (GameObject border in borders)
             addMaterial(border, borderMaterial);

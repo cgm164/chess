@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using SimpleJSON;
+using UnityEngine.UI;
 
 public class Chess : MonoBehaviour
 {
     private string status = "";
+    public AudioSource wrongMovement;
 
     public Chess() { }
     
@@ -18,6 +20,12 @@ public class Chess : MonoBehaviour
             downloadHandler = new DownloadHandlerBuffer()
         };
         request.SetRequestHeader("Content-Type", "application/json");
+
+        if (request.isHttpError)
+            Debug.Log("Not API work");
+        if (request.isNetworkError)
+            Debug.Log("Not Internet work");
+
         yield return request.SendWebRequest();
         
         callback(JSONNode.Parse(request.downloadHandler.text));
