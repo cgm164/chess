@@ -110,7 +110,6 @@ public class BoardManager : MonoBehaviour
 
     private void GenerateBoard()
     {
-        GenerateBorders();
         float size = cell.GetComponent<Collider>().bounds.size.x;
         float height = cell.GetComponent<Collider>().bounds.size.y;
 
@@ -569,32 +568,6 @@ public class BoardManager : MonoBehaviour
 
         
     }
-    public void GenerateBorders(){
-        GameObject go;
-        float size=0;
 
-        //Borde Inferior
-        size = bordeXInf.GetComponent<Collider>().bounds.size.x;
-        go = Instantiate(bordeXInf);
-        go.transform.position += new Vector3(size, 0, size);
-
-        //Borde Izquierdo
-        size = bordeYIzq.GetComponent<Collider>().bounds.size.x;
-        go = Instantiate(bordeYIzq);
-        go.transform.position += new Vector3(size, 0, size);
-
-        //BordeSuperior
-        size = bordeXSup.GetComponent<Collider>().bounds.size.x;
-        go = Instantiate(bordeXSup);
-        go.transform.position += new Vector3(size, 0, size);
-
-        //Borde Derecho
-        size = bordeYDer.GetComponent<Collider>().bounds.size.x;
-        go = Instantiate(bordeYDer);
-        go.transform.position += new Vector3(size, 0, size);
-
-    }
-
-  
 }
 
