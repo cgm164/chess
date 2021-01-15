@@ -31,7 +31,14 @@ public class BoardManager : MonoBehaviour
     public ClockUI timerB; 
     public GameObject camera;
     public Material[] actualW;
-    public AudioSource soundBreak;
+    public AudioSource breakMarble;
+    public AudioSource breakMetal;
+    public AudioSource breakWood;
+    public AudioSource movement;
+    public AudioSource end;
+    public AudioSource promotion;
+    public string mat = "wooden";
+
 
     public GameObject islandW;
     public GameObject islandB;
@@ -290,13 +297,27 @@ public class BoardManager : MonoBehaviour
 
         void movePiece(string o, string n)
         {
+            movement.Play();
             if (cellSelect.GetComponent<State>().piece != null)
             {
                 if (turn == Turn.WHITE)
                    AddIntoIslandB(cellSelect.GetComponent<State>().piece);
                 else
                     AddIntoIslandW(cellSelect.GetComponent<State>().piece);
-                soundBreak.Play();
+
+                switch (mat)
+                {
+                    case "wooden":
+                        breakWood.Play();
+                        break;
+                    case "metal":
+                        breakMetal.Play();
+                        break;
+                    default:
+                        breakMarble.Play();
+                        break;
+                }
+                
                 StartCoroutine(cellSelect.GetComponent<State>().piece.GetComponent<PieceBehaviour>().Capture());
             }
 
@@ -304,6 +325,7 @@ public class BoardManager : MonoBehaviour
             {   
                 if (promotionQueen(cellSelect, pieceSelect))
                 {
+                    promotion.Play();
                     GameObject obj = Instantiate(queen);
                     obj.transform.position += new Vector3(pieceSelect.transform.position.x, cellSelect.GetComponent<Collider>().bounds.size.y, pieceSelect.transform.position.z);
                     obj.GetComponent<MeshRenderer>().material = new Material(pieceSelect.GetComponent<MeshRenderer>().material);
@@ -341,6 +363,7 @@ public class BoardManager : MonoBehaviour
                             
                         return;
                     }
+                    else end.Play();
                     Debug.Log("GAME OVER");
                     timerB.stop = true;
                     timerW.stop = true;
@@ -528,13 +551,16 @@ public class BoardManager : MonoBehaviour
         ChangeMaterialIsland(islandB.transform.parent.gameObject, m1, m2);
 
         if (m1.name.Contains("madera")){
+            mat = "wooden";
             borderMaterial=borde_madera;
         }
         else if(m1.name.Contains("marmol")){
-            borderMaterial=borde_marmol;
+            mat = "marble";
+            borderMaterial =borde_marmol;
         }
         else{
-            borderMaterial=borde_metalico;
+            mat = "metal";
+            borderMaterial =borde_metalico;
         }
 
         GameObject[] borders = SceneManager.GetActiveScene().GetRootGameObjects().Where(c => c.name.Contains("Borde")).ToArray();
