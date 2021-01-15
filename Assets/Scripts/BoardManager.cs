@@ -223,19 +223,20 @@ public class BoardManager : MonoBehaviour
         float timeB = timerB.day;
         float timeW = timerW.day;
 
-        if ((timeB < 0 || timeW < 0) && !isGameEnding)
+        if ((timeB <= 0 || timeW <= 0) && !isGameEnding)
         {
             timerB.stop = true;
             timerW.stop = true;
-            timerB.day = 0;
-            timerW.day = 0;
             //int whitePoints = CountPointsIsland(islandW);
             //int blackPoints = CountPointsIsland(islandB);
             isGameEnding = true;
-            if (timeB < 0)
+            if (timeB <= 0)
                 Debug.Log("Negras ganan");
             else
                 Debug.Log("Blancas ganan");
+
+            timerB.day = 0;
+            timerW.day = 0;
         } 
     }
 
