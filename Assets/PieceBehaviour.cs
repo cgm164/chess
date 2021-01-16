@@ -7,7 +7,7 @@ public class PieceBehaviour : MonoBehaviour
 
     public GameObject capturedPrefab;
 
-    public IEnumerator Capture()
+    public IEnumerator Capture(float speed = 1.0f)
     {
         
         // Make original object invisible
@@ -22,7 +22,7 @@ public class PieceBehaviour : MonoBehaviour
 
         // Play animation
         var animationComponent = capturedObject.GetComponent<Animation>();
-        // animationComponent["Captured"].speed = .5f;
+        animationComponent["Captured"].speed = speed;
         animationComponent.Play("Captured");
         while (animationComponent.isPlaying) {
             yield return null;

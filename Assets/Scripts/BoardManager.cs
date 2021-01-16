@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 using System.Linq;
 using System;
@@ -14,10 +15,7 @@ public class BoardManager : MonoBehaviour
     public GameObject sharp;
     public GameObject queen;
     public GameObject king;
-    public GameObject bordeXSup;
-    public GameObject bordeYDer;
-    public GameObject bordeXInf;
-    public GameObject bordeYIzq;
+    public GameObject bordes;
     public Material material_madera_clara;
     public Material material_madera_oscura;
     public Material material_marmol_claro;
@@ -37,8 +35,9 @@ public class BoardManager : MonoBehaviour
     public AudioSource movement;
     public AudioSource end;
     public AudioSource promotion;
+    public PostProcessAttribute grader;
     public string mat = "wooden";
-
+    private bool isEnding = false;
 
     public GameObject islandW;
     public GameObject islandB;
@@ -229,6 +228,7 @@ public class BoardManager : MonoBehaviour
             //int whitePoints = CountPointsIsland(islandW);
             //int blackPoints = CountPointsIsland(islandB);
             isGameEnding = true;
+            isEnding = true;
             if (timeB <= 0)
                 Debug.Log("Negras ganan");
             else
@@ -353,7 +353,7 @@ public class BoardManager : MonoBehaviour
                             pieceSelect = oldCell.GetComponent<State>().piece;
                             movePiece(castlingsRookL[index], castlingsRookR[index]);
                         }
-                        else
+                        else if (!isGameEnding)
                         {
                             timerW.stop = turn == Turn.WHITE;
                             timerB.stop = turn == Turn.BLACK;
@@ -362,10 +362,19 @@ public class BoardManager : MonoBehaviour
                             
                         return;
                     }
-                    else end.Play();
-                    Debug.Log("GAME OVER");
+                    
+                    end.Play();
                     timerB.stop = true;
                     timerW.stop = true;
+                    isEnding = true;
+                    pieceSelect.GetComponent<MeshRenderer>().material.color = pieceSelect.GetComponent<State>().color;
+                    cellSelect.GetComponent<MeshRenderer>().material.color = cellSelect.GetComponent<State>().color;
+                    pieceSelect = null;
+                    cellSelect = null;
+                    if (st == Chess.GameStatus.black_won)
+                        StartCoroutine(GameObject.Find("piecee1white").GetComponent<PieceBehaviour>().Capture(0.1f));
+                    else if (st == Chess.GameStatus.white_won)
+                        StartCoroutine(GameObject.Find("piecee8black").GetComponent<PieceBehaviour>().Capture(0.1f));
                 });
             });
         }
@@ -456,10 +465,17 @@ public class BoardManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isEnding)
+        {
+            camera.GetComponent<PostProcessVolume>().profile.TryGetSettings(out ColorGrading color);
+            color.saturation.value -= Math.Min(100, 15 * Time.deltaTime);
+            isEnding = color.saturation.value >= -60;
+        }
+
         if (isGameEnding)
             return;
 
-        //CheckTimeout();
+        CheckTimeout();
 
         if (IsHumanVSIA() && IsTurnIA())
         {
@@ -546,6 +562,7 @@ public class BoardManager : MonoBehaviour
 
         foreach (GameObject piece in objects)
             addMaterial(piece, piece.name.Contains("black") ? m1 : m2);
+
         ChangeMaterialIsland(islandW.transform.parent.gameObject, m1, m2);
         ChangeMaterialIsland(islandB.transform.parent.gameObject, m1, m2);
 
@@ -562,11 +579,8 @@ public class BoardManager : MonoBehaviour
             borderMaterial =borde_metalico;
         }
 
-        GameObject[] borders = SceneManager.GetActiveScene().GetRootGameObjects().Where(c => c.name.Contains("Borde")).ToArray();
-        foreach (GameObject border in borders)
-            addMaterial(border, borderMaterial);
-
-        
+        foreach (Transform border in bordes.transform)
+            addMaterial(border.gameObject, borderMaterial);        
     }
 
 }
