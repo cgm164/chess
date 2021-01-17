@@ -32,9 +32,11 @@ public class BoardManager : MonoBehaviour
     public AudioSource breakMarble;
     public AudioSource breakMetal;
     public AudioSource breakWood;
+    public AudioSource shiftChange;
     public AudioSource movement;
     public AudioSource end;
     public AudioSource promotion;
+    public AudioSource gameOver;
     public PostProcessAttribute grader;
     public string mat = "wooden";
     private bool isEnding = false;
@@ -297,6 +299,7 @@ public class BoardManager : MonoBehaviour
         void movePiece(string o, string n)
         {
             movement.Play();
+            shiftChange.Play();
             if (cellSelect.GetComponent<State>().piece != null)
             {
                 if (turn == Turn.WHITE)
@@ -364,6 +367,7 @@ public class BoardManager : MonoBehaviour
                     }
                     
                     end.Play();
+                    gameOver.Play();
                     timerB.stop = true;
                     timerW.stop = true;
                     isEnding = true;
