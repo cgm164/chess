@@ -55,7 +55,10 @@ public class ClockUI : MonoBehaviour {
         string minutesString = Mathf.Floor(((dayNormalized * hoursPerDay) % 1f) * minutesPerHour).ToString("00");
         string secondsString = Mathf.Floor(((((dayNormalized * hoursPerDay) % 1f) * minutesPerHour) % 1f) * 60).ToString("00");
 
-        timeText.text = minutesString + ":" + secondsString;
+        if (Mathf.Floor(((dayNormalized * hoursPerDay) % 1f) * minutesPerHour) >= 0)
+            timeText.text = minutesString + ":" + secondsString;
+        else
+            timeText.text = "00:00";
     }
 
     private void Update() {

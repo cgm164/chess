@@ -6,17 +6,15 @@ public class PieceBehaviour : MonoBehaviour
 {
 
     public GameObject capturedPrefab;
-    public Vector3 scale;
 
-    public IEnumerator Capture()
+    public IEnumerator Capture(float speed = 1.0f)
     {
         
         // Make original object invisible
         var meshRendererComponent = gameObject.GetComponent<MeshRenderer>();
         meshRendererComponent.enabled = false;
 
-        var capturedObject = Instantiate(capturedPrefab, gameObject.transform);
-        capturedObject.transform.localScale = scale;
+        var capturedObject = Instantiate(capturedPrefab, gameObject.transform.position, new Quaternion(0f, 0f, 0f, 0f));
 
         foreach (var childRenderer in capturedObject.GetComponentsInChildren<MeshRenderer>()){
             childRenderer.material = meshRendererComponent.material;
@@ -24,7 +22,7 @@ public class PieceBehaviour : MonoBehaviour
 
         // Play animation
         var animationComponent = capturedObject.GetComponent<Animation>();
-        animationComponent["Captured"].speed = .5f;
+        animationComponent["Captured"].speed = speed;
         animationComponent.Play("Captured");
         while (animationComponent.isPlaying) {
             yield return null;
