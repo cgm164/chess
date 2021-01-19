@@ -535,9 +535,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1990912142}
     m_Modifications:
+    - target: {fileID: 3999459285475547894, guid: 1d5cacea1ba1d4198a770ddbfc401e17, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6209769667000738320, guid: 1d5cacea1ba1d4198a770ddbfc401e17, type: 3}
       propertyPath: m_Name
       value: BordeYIzq
+      objectReference: {fileID: 0}
+    - target: {fileID: 6209769667000738320, guid: 1d5cacea1ba1d4198a770ddbfc401e17, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6209769667000738351, guid: 1d5cacea1ba1d4198a770ddbfc401e17, type: 3}
       propertyPath: m_RootOrder
@@ -652,6 +660,10 @@ PrefabInstance:
     - target: {fileID: 5463008541491264480, guid: f1a1e8b0dd60645c78f3cbb5ea6248df, type: 3}
       propertyPath: m_Name
       value: BordeXSup
+      objectReference: {fileID: 0}
+    - target: {fileID: 5463008541491264480, guid: f1a1e8b0dd60645c78f3cbb5ea6248df, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5463008541491264511, guid: f1a1e8b0dd60645c78f3cbb5ea6248df, type: 3}
       propertyPath: m_RootOrder
@@ -1649,7 +1661,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.25882354, g: 0.5294118, b: 0.64705884, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2035,7 +2047,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5361627939949206928, guid: 5976bb56a7ff57448abd9d98d5ebb2ce, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5361627939949206928, guid: 5976bb56a7ff57448abd9d98d5ebb2ce, type: 3}
       propertyPath: m_LocalScale.x
@@ -2588,7 +2600,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1.1
+  m_Intensity: 1.2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -2806,6 +2818,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cell
       objectReference: {fileID: 0}
+    - target: {fileID: 227227959373804154, guid: a91c9a19ae5eb6646855befc5c72882d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2244460992403360457, guid: a91c9a19ae5eb6646855befc5c72882d, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -2925,7 +2941,7 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 1
+  m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
     topLeft: {r: 1, g: 1, b: 1, a: 1}
@@ -3288,7 +3304,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.25882354, g: 0.5294118, b: 0.64705884, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4117,9 +4133,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: 180
       objectReference: {fileID: 0}
+    - target: {fileID: 6596431371780712857, guid: 776eede8b16ed4b8dadec42ce410bff1, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6887124015079357697, guid: 776eede8b16ed4b8dadec42ce410bff1, type: 3}
       propertyPath: m_Name
       value: BordeXInf
+      objectReference: {fileID: 0}
+    - target: {fileID: 6887124015079357697, guid: 776eede8b16ed4b8dadec42ce410bff1, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6887124015079357726, guid: 776eede8b16ed4b8dadec42ce410bff1, type: 3}
       propertyPath: m_RootOrder
@@ -4614,7 +4638,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.87058824}
+  m_Color: {r: 0.25882354, g: 0.5294118, b: 0.64705884, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4729,7 +4753,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 60.997, y: -30, z: 0}
 --- !u!1 &1429804281
 GameObject:
@@ -6251,7 +6275,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.25882354, g: 0.5294118, b: 0.64705884, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6498,7 +6522,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1750424771}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -134}
+  m_LocalPosition: {x: 0, y: 0, z: -127}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 1283313109}
@@ -6507,8 +6531,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: -60}
-  m_SizeDelta: {x: 160, y: 35}
+  m_AnchoredPosition: {x: 7, y: -44}
+  m_SizeDelta: {x: 234, y: 50.494064}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1750424773
 MonoBehaviour:
@@ -7457,6 +7481,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BordeYDer
       objectReference: {fileID: 0}
+    - target: {fileID: 5309905191460380020, guid: 769e2f8642da246f9813e2534824fa52, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5309905191460380023, guid: 769e2f8642da246f9813e2534824fa52, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 769e2f8642da246f9813e2534824fa52, type: 3}
@@ -7528,14 +7556,14 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4281479730
   m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_enableVertexGradient: 0
+  m_enableVertexGradient: 1
   m_colorMode: 3
   m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
+    topLeft: {r: 0, g: 0.6392157, b: 0.94509804, a: 1}
+    topRight: {r: 0, g: 0.07058824, b: 1, a: 1}
+    bottomLeft: {r: 0.2, g: 0.2509804, b: 0.2627451, a: 1}
+    bottomRight: {r: 0.40784314, g: 0.17254902, b: 0.47058824, a: 1}
+  m_fontColorGradientPreset: {fileID: 11400000, guid: 4e2def355c615a24480ae824a8ecd21e, type: 2}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
