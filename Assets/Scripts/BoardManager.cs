@@ -6,6 +6,7 @@ using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 using System.Linq;
 using System;
+using TMPro;
 public class BoardManager : MonoBehaviour
 {
     public GameObject cell;
@@ -40,6 +41,9 @@ public class BoardManager : MonoBehaviour
     public PostProcessAttribute grader;
     public string mat = "wooden";
     private bool isEnding = false;
+
+    public TextMeshProUGUI textWin;
+    public GameObject panelWin;
 
     public GameObject islandW;
     public GameObject islandB;
@@ -218,6 +222,12 @@ public class BoardManager : MonoBehaviour
         return points;
     }
 
+    private void Win(Turn winner)
+    {
+        textWin.text = winner == Turn.WHITE ? "Black win" : "White win";
+        panelWin.SetActive(true); 
+    }
+
     private void CheckTimeout()
     {
         float timeB = timerB.day;
@@ -227,15 +237,21 @@ public class BoardManager : MonoBehaviour
         {
             timerB.stop = true;
             timerW.stop = true;
-            //int whitePoints = CountPointsIsland(islandW);
-            //int blackPoints = CountPointsIsland(islandB);
             isGameEnding = true;
             isEnding = true;
+            end.Play();
+            gameOver.Play();
             if (timeB <= 0)
-                Debug.Log("Negras ganan");
+            {
+                StartCoroutine(GameObject.Find("piecee8black").GetComponent<PieceBehaviour>().Capture(0.1f));
+                Win(Turn.BLACK);
+            }
             else
-                Debug.Log("Blancas ganan");
-
+            {
+                Win(Turn.WHITE);
+                StartCoroutine(GameObject.Find("piecee1white").GetComponent<PieceBehaviour>().Capture(0.1f));
+            }
+                
             timerB.day = 0;
             timerW.day = 0;
         } 
@@ -322,7 +338,8 @@ public class BoardManager : MonoBehaviour
                 
                 StartCoroutine(cellSelect.GetComponent<State>().piece.GetComponent<PieceBehaviour>().Capture());
             }
-
+            timerW.stop = true;
+            timerB.stop = true;
             pieceSelect.GetComponent<State>().Move(cellSelect, () =>
             {   
                 if (promotionQueen(cellSelect, pieceSelect))
@@ -376,9 +393,15 @@ public class BoardManager : MonoBehaviour
                     pieceSelect = null;
                     cellSelect = null;
                     if (st == Chess.GameStatus.black_won)
+                    {
                         StartCoroutine(GameObject.Find("piecee1white").GetComponent<PieceBehaviour>().Capture(0.1f));
+                        Win(Turn.WHITE);
+                    }
                     else if (st == Chess.GameStatus.white_won)
+                    {
                         StartCoroutine(GameObject.Find("piecee8black").GetComponent<PieceBehaviour>().Capture(0.1f));
+                        Win(Turn.BLACK);
+                    }   
                 });
             });
         }
