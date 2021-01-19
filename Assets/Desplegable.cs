@@ -17,11 +17,13 @@ public class Desplegable : MonoBehaviour
     public GameObject panelTexture;
     public GameObject ButtonOpciones;
     public GameObject ButtonStart;
+    public GameObject PanelWin;
 
     private bool activadoButtonTexture;
 
     void Start()
     {
+        PanelWin.SetActive(false);
         ButtonReanudar.SetActive(false);
         ButtonNueva.SetActive(false);
         ButtonSalir.SetActive(false);
@@ -89,5 +91,9 @@ public class Desplegable : MonoBehaviour
     {
         ButtonStart.SetActive(false);
     }
-
+    
+    public void BackWin()
+    {
+        PanelWin.SetActive(false);
     }
+}

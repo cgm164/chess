@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 using System.Linq;
 using System;
+using TMPro;
 public class BoardManager : MonoBehaviour
 {
     public GameObject cell;
@@ -14,10 +16,7 @@ public class BoardManager : MonoBehaviour
     public GameObject sharp;
     public GameObject queen;
     public GameObject king;
-    public GameObject bordeXSup;
-    public GameObject bordeYDer;
-    public GameObject bordeXInf;
-    public GameObject bordeYIzq;
+    public GameObject bordes;
     public Material material_madera_clara;
     public Material material_madera_oscura;
     public Material material_marmol_claro;
@@ -34,11 +33,17 @@ public class BoardManager : MonoBehaviour
     public AudioSource breakMarble;
     public AudioSource breakMetal;
     public AudioSource breakWood;
+    public AudioSource shiftChange;
     public AudioSource movement;
     public AudioSource end;
     public AudioSource promotion;
+    public AudioSource gameOver;
+    public PostProcessAttribute grader;
     public string mat = "wooden";
+    private bool isEnding = false;
 
+    public TextMeshProUGUI textWin;
+    public GameObject panelWin;
 
     public GameObject islandW;
     public GameObject islandB;
@@ -92,7 +97,7 @@ public class BoardManager : MonoBehaviour
         float z = obj.transform.position.z;
 
         iPiece.transform.position += new Vector3(x, y + height, z);
-        iPiece.transform.rotation  = Quaternion.Euler(piece.transform.rotation.eulerAngles.x, piece.transform.eulerAngles.y + rotation, piece.transform.rotation.eulerAngles.z);
+        iPiece.transform.rotation  = Quaternion.Euler(piece.transform.rotation.eulerAngles.x, piece.transform.eulerAngles.y + rotation + 180f, piece.transform.rotation.eulerAngles.z);
         iPiece.GetComponent<State>().color = color;
         iPiece.GetComponent<State>().player = player;
         iPiece.GetComponent<State>().points = points;
@@ -110,7 +115,6 @@ public class BoardManager : MonoBehaviour
 
     private void GenerateBoard()
     {
-        GenerateBorders();
         float size = cell.GetComponent<Collider>().bounds.size.x;
         float height = cell.GetComponent<Collider>().bounds.size.y;
 
@@ -218,24 +222,38 @@ public class BoardManager : MonoBehaviour
         return points;
     }
 
+    private void Win(Turn winner)
+    {
+        textWin.text = winner == Turn.WHITE ? "Black win" : "White win";
+        panelWin.SetActive(true); 
+    }
+
     private void CheckTimeout()
     {
         float timeB = timerB.day;
         float timeW = timerW.day;
 
-        if ((timeB < 0 || timeW < 0) && !isGameEnding)
+        if ((timeB <= 0 || timeW <= 0) && !isGameEnding)
         {
             timerB.stop = true;
             timerW.stop = true;
+            isGameEnding = true;
+            isEnding = true;
+            end.Play();
+            gameOver.Play();
+            if (timeB <= 0)
+            {
+                StartCoroutine(GameObject.Find("piecee8black").GetComponent<PieceBehaviour>().Capture(0.1f));
+                Win(Turn.BLACK);
+            }
+            else
+            {
+                Win(Turn.WHITE);
+                StartCoroutine(GameObject.Find("piecee1white").GetComponent<PieceBehaviour>().Capture(0.1f));
+            }
+                
             timerB.day = 0;
             timerW.day = 0;
-            //int whitePoints = CountPointsIsland(islandW);
-            //int blackPoints = CountPointsIsland(islandB);
-            isGameEnding = true;
-            if (timeB < 0)
-                Debug.Log("Negras ganan");
-            else
-                Debug.Log("Blancas ganan");
         } 
     }
 
@@ -297,6 +315,7 @@ public class BoardManager : MonoBehaviour
         void movePiece(string o, string n)
         {
             movement.Play();
+            shiftChange.Play();
             if (cellSelect.GetComponent<State>().piece != null)
             {
                 if (turn == Turn.WHITE)
@@ -319,7 +338,8 @@ public class BoardManager : MonoBehaviour
                 
                 StartCoroutine(cellSelect.GetComponent<State>().piece.GetComponent<PieceBehaviour>().Capture());
             }
-
+            timerW.stop = true;
+            timerB.stop = true;
             pieceSelect.GetComponent<State>().Move(cellSelect, () =>
             {   
                 if (promotionQueen(cellSelect, pieceSelect))
@@ -353,7 +373,7 @@ public class BoardManager : MonoBehaviour
                             pieceSelect = oldCell.GetComponent<State>().piece;
                             movePiece(castlingsRookL[index], castlingsRookR[index]);
                         }
-                        else
+                        else if (!isGameEnding)
                         {
                             timerW.stop = turn == Turn.WHITE;
                             timerB.stop = turn == Turn.BLACK;
@@ -362,10 +382,26 @@ public class BoardManager : MonoBehaviour
                             
                         return;
                     }
-                    else end.Play();
-                    Debug.Log("GAME OVER");
+                    
+                    end.Play();
+                    gameOver.Play();
                     timerB.stop = true;
                     timerW.stop = true;
+                    isEnding = true;
+                    pieceSelect.GetComponent<MeshRenderer>().material.color = pieceSelect.GetComponent<State>().color;
+                    cellSelect.GetComponent<MeshRenderer>().material.color = cellSelect.GetComponent<State>().color;
+                    pieceSelect = null;
+                    cellSelect = null;
+                    if (st == Chess.GameStatus.black_won)
+                    {
+                        StartCoroutine(GameObject.Find("piecee1white").GetComponent<PieceBehaviour>().Capture(0.1f));
+                        Win(Turn.WHITE);
+                    }
+                    else if (st == Chess.GameStatus.white_won)
+                    {
+                        StartCoroutine(GameObject.Find("piecee8black").GetComponent<PieceBehaviour>().Capture(0.1f));
+                        Win(Turn.BLACK);
+                    }   
                 });
             });
         }
@@ -456,10 +492,17 @@ public class BoardManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isEnding)
+        {
+            camera.GetComponent<PostProcessVolume>().profile.TryGetSettings(out ColorGrading color);
+            color.saturation.value -= Math.Min(100, 15 * Time.deltaTime);
+            isEnding = color.saturation.value >= -60;
+        }
+
         if (isGameEnding)
             return;
 
-        //CheckTimeout();
+        CheckTimeout();
 
         if (IsHumanVSIA() && IsTurnIA())
         {
@@ -546,6 +589,7 @@ public class BoardManager : MonoBehaviour
 
         foreach (GameObject piece in objects)
             addMaterial(piece, piece.name.Contains("black") ? m1 : m2);
+
         ChangeMaterialIsland(islandW.transform.parent.gameObject, m1, m2);
         ChangeMaterialIsland(islandB.transform.parent.gameObject, m1, m2);
 
@@ -562,38 +606,9 @@ public class BoardManager : MonoBehaviour
             borderMaterial =borde_metalico;
         }
 
-        GameObject[] borders = SceneManager.GetActiveScene().GetRootGameObjects().Where(c => c.name.Contains("Borde")).ToArray();
-        foreach (GameObject border in borders)
-            addMaterial(border, borderMaterial);
-
-        
-    }
-    public void GenerateBorders(){
-        GameObject go;
-        float size=0;
-
-        //Borde Inferior
-        size = bordeXInf.GetComponent<Collider>().bounds.size.x;
-        go = Instantiate(bordeXInf);
-        go.transform.position += new Vector3(size, 0, size);
-
-        //Borde Izquierdo
-        size = bordeYIzq.GetComponent<Collider>().bounds.size.x;
-        go = Instantiate(bordeYIzq);
-        go.transform.position += new Vector3(size, 0, size);
-
-        //BordeSuperior
-        size = bordeXSup.GetComponent<Collider>().bounds.size.x;
-        go = Instantiate(bordeXSup);
-        go.transform.position += new Vector3(size, 0, size);
-
-        //Borde Derecho
-        size = bordeYDer.GetComponent<Collider>().bounds.size.x;
-        go = Instantiate(bordeYDer);
-        go.transform.position += new Vector3(size, 0, size);
-
+        foreach (Transform border in bordes.transform)
+            addMaterial(border.gameObject, borderMaterial);        
     }
 
-  
 }
 
